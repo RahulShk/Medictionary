@@ -1,0 +1,181 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Acer\\source\\repos\\Medictionary\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\models\\industry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\models\\industry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\models\\base.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\models\\base.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\store\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\store\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\store\\interface\\istore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\store\\interface\\istore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\viewcomponents\\industryviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\viewcomponents\\industryviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\medictionary.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\medictionary.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\utility\\industrymapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\utility\\industrymapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|c:\\users\\acer\\source\\repos\\medictionary\\medictionary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86BD0E77-ADE9-4739-9C05-09149A444C90}|Medictionary\\Medictionary.csproj|solutionrelative:medictionary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Base.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Models\\Base.cs",
+              "RelativeDocumentMoniker": "Medictionary\\Models\\Base.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Models\\Base.cs",
+              "RelativeToolTip": "Medictionary\\Models\\Base.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAswAsAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-09T15:42:01.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IStore.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Store\\Interface\\IStore.cs",
+              "RelativeDocumentMoniker": "Medictionary\\Store\\Interface\\IStore.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Store\\Interface\\IStore.cs",
+              "RelativeToolTip": "Medictionary\\Store\\Interface\\IStore.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-09T15:36:50.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Store.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Store\\Store.cs",
+              "RelativeDocumentMoniker": "Medictionary\\Store\\Store.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Store\\Store.cs",
+              "RelativeToolTip": "Medictionary\\Store\\Store.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-09T15:36:08.198Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IndustryViewComponent.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\ViewComponents\\IndustryViewComponent.cs",
+              "RelativeDocumentMoniker": "Medictionary\\ViewComponents\\IndustryViewComponent.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\ViewComponents\\IndustryViewComponent.cs",
+              "RelativeToolTip": "Medictionary\\ViewComponents\\IndustryViewComponent.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-09T15:25:12.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IndustryMapper.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Utility\\IndustryMapper.cs",
+              "RelativeDocumentMoniker": "Medictionary\\Utility\\IndustryMapper.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Utility\\IndustryMapper.cs",
+              "RelativeToolTip": "Medictionary\\Utility\\IndustryMapper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-09T15:15:10.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Medictionary",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Medictionary.csproj",
+              "RelativeDocumentMoniker": "Medictionary\\Medictionary.csproj",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Medictionary.csproj",
+              "RelativeToolTip": "Medictionary\\Medictionary.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-12-09T15:14:23.338Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Industry.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Models\\Industry.cs",
+              "RelativeDocumentMoniker": "Medictionary\\Models\\Industry.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Models\\Industry.cs",
+              "RelativeToolTip": "Medictionary\\Models\\Industry.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-09T14:27:39.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Program.cs",
+              "RelativeDocumentMoniker": "Medictionary\\Program.cs",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\Program.cs",
+              "RelativeToolTip": "Medictionary\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-09T06:28:53.374Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\appsettings.json",
+              "RelativeDocumentMoniker": "Medictionary\\appsettings.json",
+              "ToolTip": "C:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\appsettings.json",
+              "RelativeToolTip": "Medictionary\\appsettings.json",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAwAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-12-09T06:15:41.268Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
