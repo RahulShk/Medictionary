@@ -8,8 +8,6 @@ namespace Medictionary.Models
         string ID { get; set; }
         DateTime CreatedDate { get; set; }
         string? CreatedBy { get; set; }
-        DateTime LastUpdatedDate { get; set; }
-        string? LastUpdatedBy { get; set; }
         bool IsDeleted { get; set; }
     }
 
@@ -27,12 +25,6 @@ namespace Medictionary.Models
 
         [Column("created_by")] 
         public string? CreatedBy { get; set; }
-
-        [Column("last_updated_date")]
-        public DateTime LastUpdatedDate { get; set; }
-
-        [Column("last_updated_by")] 
-        public string? LastUpdatedBy { get; set; }
 
         [Column("is_deleted")]
         [Required]

@@ -1,23 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Medictionary.Models;
 using Medictionary.Store.Interface;
 using Medictionary.Services.Interfaces;
+using Medictionary.Data;
 
 namespace Medictionary.Store
 {
     public class Store<TDocument> : IStore<TDocument>
         where TDocument : class, IDocument
     {
-        private readonly DbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly DbSet<TDocument> _dbSet;
         private readonly IFileService _fileService;
 
-        public Store(DbContext context, IFileService fileService)
+        public Store(ApplicationDbContext context, IFileService fileService)
         {
             _context = context;
             _dbSet = _context.Set<TDocument>();

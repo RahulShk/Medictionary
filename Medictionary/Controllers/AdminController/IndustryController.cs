@@ -41,7 +41,7 @@ namespace Medictionary.Controllers.AdminController
 
         public IActionResult Add()
         {
-            var industryDto = new IndustryDTO(); 
+            var industryDto = new IndustryDTO();
             return View(industryDto);
         }
 

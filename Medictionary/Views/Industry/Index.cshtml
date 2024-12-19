@@ -7,34 +7,43 @@
     </div>
 </div>
 
-<div class="table-container">
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Location</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var industry in Model)
-            {
-                <tr>
-                    <td>@industry.Name</td>
-                    <td>@industry.Description ?? "No description available"</td>
-                    <td>@industry.Location ?? "No location specified"</td>
-                    <td style="white-space:nowrap">
-                        <a href="@Url.Action("Edit", "Industry", new { id = industry?.ID })" class="btn btn-primary custom-btn">Edit</a>
-                        <form asp-controller="Industry" asp-action="DeleteConfirmed" asp-route-id="@industry?.ID" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm custom-btn">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+@if (!Model.Any())
+{
+    <p>No industries available.</p>
+}
+else
+{
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var industry in Model)
+                    {
+                        <tr>
+                            <td>@industry.Name</td>
+                            <td>@industry.Description ?? "No description available"</td>
+                            <td>@industry.Location ?? "No location specified"</td>
+                            <td style="white-space:nowrap">
+                                <a href="@Url.Action("Edit", "Industry", new { id = industry?.ID })" class="btn btn-primary custom-btn">Edit</a>
+                                <form asp-controller="Industry" asp-action="DeleteConfirmed" asp-route-id="@industry?.ID" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this industry?');">
+                                    <button type="submit" class="btn btn-danger btn-sm custom-btn">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
 
 <style>
     body {
@@ -58,27 +67,27 @@
         overflow: hidden;
     }
 
-    .styled-table thead tr {
-        background-color: #ccc; /* Greyish background for header */
-        color: #000;
-        text-align: left;
-    }
+        .styled-table thead tr {
+            background-color: #ccc;
+            color: #000;
+            text-align: left;
+        }
 
-    .styled-table th, .styled-table td {
-        padding: 12px 15px;
-    }
+        .styled-table th, .styled-table td {
+            padding: 12px 15px;
+        }
 
-    .styled-table tbody tr:nth-child(even) {
-        background-color: #f8f8f8; /* Light grey for even rows */
-    }
+        .styled-table tbody tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
 
-    .styled-table tbody tr:nth-child(odd) {
-        background-color: #ffffff; /* White for odd rows */
-    }
+        .styled-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
 
-    .styled-table tbody tr:hover {
-        background-color: #f1f1f1; /* Slightly darker grey for hover */
-    }
+        .styled-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
 
     .custom-btn {
         background-color: #000;
@@ -90,10 +99,10 @@
         cursor: pointer;
     }
 
-    .custom-btn:hover {
-        background-color: #333;
-        color: #fff;
-    }
+        .custom-btn:hover {
+            background-color: #333;
+            color: #fff;
+        }
 
     .btn-danger {
         background-color: #f44336;
@@ -105,7 +114,7 @@
         cursor: pointer;
     }
 
-    .btn-danger:hover {
-        background-color: #d32f2f;
-    }
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
 </style>
