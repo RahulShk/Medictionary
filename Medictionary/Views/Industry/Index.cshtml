@@ -29,8 +29,8 @@ else
                     {
                         <tr>
                             <td>@industry.Name</td>
-                            <td>@industry.Description ?? "No description available"</td>
-                            <td>@industry.Location ?? "No location specified"</td>
+                            <td>@(string.IsNullOrEmpty(industry.Description) ? "No description available" : industry.Description)</td>
+                            <td>@(string.IsNullOrEmpty(industry.Location) ? "No location specified" : industry.Location)</td>
                             <td style="white-space:nowrap">
                                 <a href="@Url.Action("Edit", "Industry", new { id = industry?.ID })" class="btn btn-primary custom-btn">Edit</a>
                                 <form asp-controller="Industry" asp-action="DeleteConfirmed" asp-route-id="@industry?.ID" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this industry?');">
