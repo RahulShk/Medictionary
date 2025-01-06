@@ -1,0 +1,39 @@
+@model RegisterDTO
+
+@{
+    ViewData["Title"] = "Sign Up";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/reglogin.css" />
+
+
+<div class="signup-container">
+    <div class="logo">
+        <img src="@Url.Content("~/img/Logo.png")" alt="Wagle Logo" />
+    </div>
+    <h1>Sign Up</h1>
+    <form id="account" method="post">
+
+            <div class="form-group">
+                <input asp-for="Username" class="form-control" placeholder="Enter your Username" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+        <div class="form-group">
+            <input asp-for="Password" type="password" class="form-control" placeholder="Enter Your Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+
+    <div class="login-links">
+        Already have an account? <a href="/Account/Login">Login</a>
+    </div>
+</div>
