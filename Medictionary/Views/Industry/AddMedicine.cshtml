@@ -1,0 +1,98 @@
+@model Medictionary.DTOS.MedicineDTO
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Add New Medicine</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="AddMedicine" method="post">
+                <div class="form-group mb-4">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Composition" class="control-label"></label>
+                    <input asp-for="Composition" class="form-control" />
+                    <span asp-validation-for="Composition" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Manufacturer" class="control-label"></label>
+                    <input asp-for="Manufacturer" class="form-control" />
+                    <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Batch" class="control-label"></label>
+                    <input asp-for="Batch" class="form-control" />
+                    <span asp-validation-for="Batch" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="ManufacturingDate" class="control-label"></label>
+                    <input asp-for="ManufacturingDate" class="form-control" />
+                    <span asp-validation-for="ManufacturingDate" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="ExpiryDate" class="control-label"></label>
+                    <input asp-for="ExpiryDate" class="form-control" />
+                    <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-4">
+                    <label asp-for="Stock" class="control-label"></label>
+                    <input asp-for="Stock" class="form-control" />
+                    <span asp-validation-for="Stock" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="IndustryID" />
+                <div class="form-group text-center">
+                    <input type="submit" value="Add Medicine" class="btn btn-primary custom-btn" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-btn {
+        background-color: #000;
+        color: #fff;
+        padding: 10px 15px;
+        margin: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .custom-btn:hover {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .form-group label {
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group input {
+        margin-top: 0.5rem;
+    }
+</style>

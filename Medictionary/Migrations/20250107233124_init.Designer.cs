@@ -3,6 +3,7 @@ using System;
 using Medictionary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medictionary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250107233124_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,13 +85,13 @@ namespace Medictionary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "70dc7904-dd8d-4ed2-8b04-b23dca805373",
+                            Id = "2244927d-b4c8-450a-9b47-34ec8ad38cf3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7304f810-885a-4230-8b08-889a9b90557a",
+                            Id = "cd65a515-9012-41dc-8b0d-85f3e41f2f66",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -281,54 +284,6 @@ namespace Medictionary.Migrations
                     b.ToTable("Documents");
 
                     b.HasDiscriminator().HasValue("Industry");
-                });
-
-            modelBuilder.Entity("Medictionary.Models.Medicine", b =>
-                {
-                    b.HasBaseType("Medictionary.Models.Document");
-
-                    b.Property<string>("Batch")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Composition")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ExpiryDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("IndustryID")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Manufacturer")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ManufacturingDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Stock")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.ToTable("Documents", t =>
-                        {
-                            t.Property("Name")
-                                .HasColumnName("Medicine_Name");
-                        });
-
-                    b.HasDiscriminator().HasValue("Medicine");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

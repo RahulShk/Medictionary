@@ -3,6 +3,7 @@ using System;
 using Medictionary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medictionary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250126075251_Medicines")]
+    partial class Medicines
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,13 +85,13 @@ namespace Medictionary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "70dc7904-dd8d-4ed2-8b04-b23dca805373",
+                            Id = "c49494cc-51e1-47a9-830d-c8fa514b1bea",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7304f810-885a-4230-8b08-889a9b90557a",
+                            Id = "38e51472-e7df-43eb-b3c4-a050a40e7186",
                             Name = "User",
                             NormalizedName = "USER"
                         });
