@@ -15,7 +15,7 @@ namespace Medictionary.Data
 
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Document> Documents { get; set; }
-
+        public DbSet<Medicine> Medicines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -24,6 +24,10 @@ namespace Medictionary.Data
                 new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "Admin", NormalizedName = "ADMIN" },
                 new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "User", NormalizedName = "USER" }
             );
+            modelBuilder.Entity<Medicine>()
+                .HasOne(m => m.Industry)
+                .WithMany(i => i.Medicines)
+                .HasForeignKey(m => m.IndustryID);
         } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

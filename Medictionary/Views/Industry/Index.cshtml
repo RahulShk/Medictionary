@@ -1,4 +1,7 @@
 @model List<Medictionary.Models.Industry>
+ @{
+    Layout = "_AdminLayout";
+}
 
 <h2 class="text-center mb-5">Industry Items</h2>
 <div class="row mb-5">
@@ -21,6 +24,7 @@ else
                         <th>Name</th>
                         <th>Description</th>
                         <th>Location</th>
+                        <th>Drugs</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -31,6 +35,9 @@ else
                             <td>@industry.Name</td>
                             <td>@(string.IsNullOrEmpty(industry.Description) ? "No description available" : industry.Description)</td>
                             <td>@(string.IsNullOrEmpty(industry.Location) ? "No location specified" : industry.Location)</td>
+                            <td> 
+                                <a href="@Url.Action("Medicine", "Industry", new { id = industry?.ID })" class="btn btn-tertiary custom-btn">View Medicine Details</a>
+                            </td>
                             <td style="white-space:nowrap">
                                 <a href="@Url.Action("Edit", "Industry", new { id = industry?.ID })" class="btn btn-primary custom-btn">Edit</a>
                                 <form asp-controller="Industry" asp-action="DeleteConfirmed" asp-route-id="@industry?.ID" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this industry?');">

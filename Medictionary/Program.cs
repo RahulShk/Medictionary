@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -70,7 +71,7 @@ void SeedData(IApplicationBuilder app)
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        var roles = new[] { "ADMIN", "User" };
+        var roles = new[] { "Admin", "User" };
 
         foreach (var role in roles)
         {
@@ -95,14 +96,14 @@ void SeedData(IApplicationBuilder app)
             var result = userManager.CreateAsync(adminUser, adminPassword).Result;
             if (result.Succeeded)
             {
-                userManager.AddToRoleAsync(adminUser, "ADMIN").Wait();
+                userManager.AddToRoleAsync(adminUser, "Admin").Wait();
             }
         }
         else
         {
-            if (!userManager.IsInRoleAsync(adminUser, "ADMIN").Result)
+            if (!userManager.IsInRoleAsync(adminUser, "Admin").Result)
             {
-                userManager.AddToRoleAsync(adminUser, "ADMIN").Wait();
+                userManager.AddToRoleAsync(adminUser, "Admin");
             }
         }
     }

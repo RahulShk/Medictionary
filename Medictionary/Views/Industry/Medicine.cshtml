@@ -1,0 +1,199 @@
+@model IEnumerable<Medictionary.Models.Medicine>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Medicine Items</h2>
+    <div class="row mb-5">
+        <div class="col">
+            <a class="btn btn-primary custom-btn" asp-controller="Industry" asp-action="AddMedicine">Add Medicine</a>
+            <a class="btn btn-primary custom-btn" onclick="sortTable('name')">Alphabetical Order</a>
+        </div>
+    </div>
+    @if (!Model.Any())
+    {
+        <p class="text-center text-muted">No medicines found.</p>
+    }
+    else
+    {
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="styled-table" id="medicineTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Composition</th>
+                            <th>Manufacturer</th>
+                            <th>Batch</th>
+                            <th>Manufacturing Date</th>
+                            <th>Expiry Date</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var medicine in Model)
+                        {
+                            <tr>
+                                <td>@medicine.Name</td>
+                                <td>@medicine.Composition</td>
+                                <td>@medicine.Manufacturer</td>
+                                <td>@medicine.Batch</td>
+                                <td>@medicine.ManufacturingDate</td>
+                                <td>@medicine.ExpiryDate</td>
+                                <td>@medicine.Price</td>
+                                <td>@medicine.Stock</td>
+                                <td style="white-space:nowrap">
+                                    <a href="@Url.Action("Edit", "Medicine", new { id = medicine.ID })" class="btn btn-primary custom-btn">Edit</a>
+                                    <form asp-action="Delete" asp-controller="Industry" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this medicine?');">
+                                        <input type="hidden" name="ID" value="@medicine.ID" />
+                                        <button type="submit" class="btn btn-danger custom-btn">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+
+    .table-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .styled-table thead tr {
+        background-color: #ccc;
+        color: #000;
+        text-align: left;
+    }
+
+    .styled-table th, .styled-table td {
+        padding: 12px 15px;
+    }
+
+    .styled-table tbody tr:nth-child(even) {
+        background-color: #f8f8f8;
+    }
+
+    .styled-table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .styled-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .custom-btn {
+        background-color: #000;
+        color: #fff;
+        padding: 10px 15px;
+        margin: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .custom-btn:hover {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .btn-danger {
+        background-color: #f44336;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-danger:hover {
+        background-color: #d32f2f;
+    }
+
+    @* @media (max-width: 768px) {
+        .styled-table thead {
+            display: none;
+        }
+
+        .styled-table, .styled-table tbody, .styled-table tr, .styled-table td {
+            display: block;
+            width: 100%;
+        }
+
+        .styled-table td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+            border: none;
+        }
+
+        .styled-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+    } *@
+</style>
+
+@section Scripts {
+    <script>
+        function sortTable(criteria) {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("medicineTable");
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    if (criteria === 'name') {
+                        x = rows[i].getElementsByTagName("TD")[0];
+                        y = rows[i + 1].getElementsByTagName("TD")[0];
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (criteria === 'expiry') {
+                        x = new Date(rows[i].getElementsByTagName("TD")[5].innerHTML);
+                        y = new Date(rows[i + 1].getElementsByTagName("TD")[5].innerHTML);
+                        if (x < y) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+    </script>
+}

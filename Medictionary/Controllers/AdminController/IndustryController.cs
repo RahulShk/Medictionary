@@ -5,21 +5,26 @@ using Microsoft.AspNetCore.Authorization;
 using Medictionary.Services.Interfaces;
 using Medictionary.Store.Interface;
 using Medictionary.Utility;
+using Medictionary.Data;
 
 namespace Medictionary.Controllers.AdminController
 {
-    // [Authorize(Roles = "ADMIN")]
+    [Authorize(Roles = "Admin")]
     public class IndustryController : Controller
     {
         private readonly IFileService _fileService;
         private readonly IStore<Industry> _industryStore;
+        private readonly IStore<Medicine> _medicineStore;
+        private readonly ApplicationDbContext _applicationDbContext;
         private readonly IWebHostEnvironment _environment;
         private readonly ILogger<IndustryController> _logger;
 
-        public IndustryController(IFileService fileService, IStore<Industry> industryStore, IWebHostEnvironment environment, ILogger<IndustryController> logger)
+        public IndustryController(IFileService fileService, IStore<Industry> industryStore, IStore<Medicine> medicineStore, ApplicationDbContext applicationDbContext, IWebHostEnvironment environment, ILogger<IndustryController> logger)
         {
             _fileService = fileService;
             _industryStore = industryStore;
+            _medicineStore = medicineStore;
+            _applicationDbContext = applicationDbContext;
             _environment = environment;
             _logger = logger;
         }
@@ -150,6 +155,39 @@ namespace Medictionary.Controllers.AdminController
                 ModelState.AddModelError("Error", "An error occurred while deleting the industry.");
                 return RedirectToAction("Index");
             }
+        }
+        
+        public IActionResult AddMedicine()
+        {
+            return View(new MedicineDTO());
+        }
+
+        [HttpPost]
+        public IActionResult AddMedicine(MedicineDTO medicineDto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var medicine = MedicineMapper.Map(medicineDto);
+                    _medicineStore.InsertOne(medicine);
+                    TempData["SuccessMessage"] = "Medicine added successfully.";
+                    return RedirectToAction("Medicine", new { id = medicine.IndustryID });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "An error occurred while saving the medicine.");
+                    ModelState.AddModelError("", "An error occurred while saving the details. Please try again later.");
+                }
+            }
+            return View("Add", medicineDto);
+        }
+
+        [HttpGet("medicines/{id}")]
+        public IActionResult Medicine(string id)
+        {
+            var medicines = _applicationDbContext.Medicines.Where(m => m.IndustryID == id).ToList();
+            return View(medicines);
         }
     }
 }

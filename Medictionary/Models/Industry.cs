@@ -8,5 +8,6 @@ namespace Medictionary.Models
         public string Name { get; set; }
         public string? Description { get; set; }
         public string? Location { get; set; }
+        public ICollection<Medicine> Medicines { get; set; }
     }
 }
