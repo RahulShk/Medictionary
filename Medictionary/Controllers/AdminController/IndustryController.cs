@@ -157,21 +157,25 @@ namespace Medictionary.Controllers.AdminController
             }
         }
         
-        public IActionResult AddMedicine()
+        public IActionResult AddMedicine(string industryId)
         {
-            return View(new MedicineDTO());
+            var medicineDto = new MedicineDTO { IndustryID = industryId };
+            return View(medicineDto);
         }
 
         [HttpPost]
         public IActionResult AddMedicine(MedicineDTO medicineDto)
         {
+            _logger.LogInformation("AddMedicine POST method called.");
             if (ModelState.IsValid)
             {
                 try
                 {
                     var medicine = MedicineMapper.Map(medicineDto);
-                    _medicineStore.InsertOne(medicine);
+                    _applicationDbContext.Medicines.Add(medicine);
+                    _applicationDbContext.SaveChanges();
                     TempData["SuccessMessage"] = "Medicine added successfully.";
+                    _logger.LogInformation("Redirecting to Medicine action.");
                     return RedirectToAction("Medicine", new { id = medicine.IndustryID });
                 }
                 catch (Exception ex)
@@ -180,7 +184,11 @@ namespace Medictionary.Controllers.AdminController
                     ModelState.AddModelError("", "An error occurred while saving the details. Please try again later.");
                 }
             }
-            return View("Add", medicineDto);
+            else
+            {
+                _logger.LogWarning("Model state is invalid.");
+            }
+            return View(medicineDto);
         }
 
         [HttpGet("medicines/{id}")]
