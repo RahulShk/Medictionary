@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Medictionary")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91d4f5327b9a75d563ed1dbf60e692c5d063f2f9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae8cc09e2e49703aec183e6f80c719526bbad9e2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Medictionary")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Medictionary")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -41,6 +41,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
@@ -60,51 +61,52 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-SeedData(app);
+await SeedDataAsync(app.Services);
 
 app.Run();
 
-void SeedData(IApplicationBuilder app)
+async Task SeedDataAsync(IServiceProvider serviceProvider)
 {
-    using (var scope = app.ApplicationServices.CreateScope())
+    using (var scope = serviceProvider.CreateScope())
     {
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        var roles = new[] { "Admin", "User" };
-
+        var roles = new[] { "Admin", "User", "Stockiest" };
         foreach (var role in roles)
         {
-            if (!roleManager.RoleExistsAsync(role).Result)
+            if (!await roleManager.RoleExistsAsync(role))
             {
-                roleManager.CreateAsync(new IdentityRole(role)).Wait();
+                await roleManager.CreateAsync(new IdentityRole(role));
             }
         }
 
-        var adminUsername = "admin@gmail.com";
-        var adminPassword = "password";
+        await CreateUserIfNotExists(userManager, "admin@gmail.com", "password", "Admin");
+        await CreateUserIfNotExists(userManager, "stockiest@gmail.com", "Stockiest@123", "Stockiest");
+    }
+}
 
-        var adminUser = userManager.FindByEmailAsync(adminUsername).Result;
-        if (adminUser == null)
+async Task CreateUserIfNotExists(UserManager<IdentityUser> userManager, string email, string password, string role)
+{
+    var user = await userManager.FindByEmailAsync(email);
+    if (user == null)
+    {
+        user = new IdentityUser { UserName = email, Email = email, EmailConfirmed = true };
+        var result = await userManager.CreateAsync(user, password);
+        if (result.Succeeded)
         {
-            adminUser = new IdentityUser
-            {
-                UserName = adminUsername,
-                EmailConfirmed = true
-            };
-
-            var result = userManager.CreateAsync(adminUser, adminPassword).Result;
-            if (result.Succeeded)
-            {
-                userManager.AddToRoleAsync(adminUser, "Admin").Wait();
-            }
+            await userManager.AddToRoleAsync(user, role);
         }
         else
         {
-            if (!userManager.IsInRoleAsync(adminUser, "Admin").Result)
+            foreach (var error in result.Errors)
             {
-                userManager.AddToRoleAsync(adminUser, "Admin");
+                Console.WriteLine($"Error creating user {email}: {error.Description}");
             }
         }
+    }
+    else if (!await userManager.IsInRoleAsync(user, role))
+    {
+        await userManager.AddToRoleAsync(user, role);
     }
 }
