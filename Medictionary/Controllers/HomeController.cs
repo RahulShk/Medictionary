@@ -14,13 +14,15 @@ namespace Medictionary.Controllers
     {
         private readonly IFileService _fileService;
         private readonly IStore<Industry> _industryStore;
+        private readonly ApplicationDbContext _applicationDbContext;
         private readonly IWebHostEnvironment _environment;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IFileService fileService, IStore<Industry> industryStore, IWebHostEnvironment environment, ILogger<HomeController> logger)
+        public HomeController(IFileService fileService, IStore<Industry> industryStore, ApplicationDbContext applicationDbContext, IWebHostEnvironment environment, ILogger<HomeController> logger)
         {
             _fileService = fileService;
             _industryStore = industryStore;
+            _applicationDbContext = applicationDbContext;
             _environment = environment;
             _logger = logger;
         }
@@ -65,6 +67,15 @@ namespace Medictionary.Controllers
                 // Return an error view
                 return View("Error");
             }
+        }
+
+        [HttpGet]
+        public IActionResult GetMedicines(string industryId)
+        {
+            var medicines = _applicationDbContext.Medicines.Where(m => m.IndustryID == industryId)
+                .ToList();
+
+            return PartialView("_MedicineDetails", medicines);
         }
     }
 }
