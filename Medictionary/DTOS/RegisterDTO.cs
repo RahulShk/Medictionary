@@ -4,6 +4,20 @@ namespace Medictionary.DTOS
 {
     public class RegisterDTO
     {
+        [Required(ErrorMessage = "Name is required.")]
+        [Display(Name = "Name")]
+        public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Address is required.")]
+        [Display(Name = "Address")]
+        public string Address { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Contact number is required.")]
+        [Phone(ErrorMessage = "Invalid contact number.")]
+        [Display(Name = "Contact No")]
+        public string ContactNo { get; set; } = string.Empty;
+
+        public IFormFile ImageFile { get; set; }
 
         [Required(ErrorMessage = "Username is required.")]
         [EmailAddress(ErrorMessage = "Invalid username, please enter your Username in email format!")]

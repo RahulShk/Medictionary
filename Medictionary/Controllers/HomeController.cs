@@ -7,6 +7,9 @@ using Medictionary.Store.Interface;
 using Medictionary.Utility;
 using Medictionary.Controllers.AdminController;
 using Medictionary.Data;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Medictionary.Controllers
 {
@@ -16,23 +19,38 @@ namespace Medictionary.Controllers
         private readonly IStore<Industry> _industryStore;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IWebHostEnvironment _environment;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IFileService fileService, IStore<Industry> industryStore, ApplicationDbContext applicationDbContext, IWebHostEnvironment environment, ILogger<HomeController> logger)
+        public HomeController(IFileService fileService, IStore<Industry> industryStore, ApplicationDbContext applicationDbContext, IWebHostEnvironment environment, UserManager<User> userManager, ILogger<HomeController> logger)
         {
             _fileService = fileService;
             _industryStore = industryStore;
             _applicationDbContext = applicationDbContext;
             _environment = environment;
+            _userManager = userManager;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var industry = _industryStore.FilterBy(x => true).ToList();
-                return View(industry);
+                var userId = _userManager.GetUserId(User);
+                _logger.LogInformation($"User ID retrieved: {userId}");
+
+                var user = await _userManager.GetUserAsync(User);
+                _logger.LogInformation($"Retrieved user: {user?.UserName}");
+
+                if (user == null)
+                {
+                    _logger.LogWarning("User not found in database.");
+                    return RedirectToAction("Login", "Identity");
+                }
+
+                _logger.LogInformation($"User Found: {user.Name}, Profile Image: {(user.ProfileImage != null ? user.ProfileImage.FilePath : "No Image")}");
+
+                return View(user);
             }
             catch (Exception ex)
             {

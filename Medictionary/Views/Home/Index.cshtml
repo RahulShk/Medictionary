@@ -1,13 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@model Medictionary.Models.User
 @{
     Layout = "_Layout";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Dynamic Industry Details</h1>
+    <h1 class="display-4">Dynamic User Details</h1>
 </div>
 
-@await Component.InvokeAsync("HomeIndustry")
+@if (User.Identity.IsAuthenticated)
+{
+    @await Component.InvokeAsync("Home")
+}
+else
+{
+    <p>Please <a href="/Identity/Login">log in</a> to see your details.</p>
+}
