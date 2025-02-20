@@ -1,0 +1,38 @@
+@model Medictionary.Models.User
+
+<section id="user-details" class="user-details section-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2>User Details</h2>
+            @if (Model != null)
+            {
+                <p>Discover more about <span>@Model.Name</span></p>
+            }
+            else
+            {
+                <p class="text-danger">User details are not available.</p>
+            }
+        </div>
+        @if (Model != null)
+        {
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="user-member">
+                        <div class="member-img">
+                            @if (Model.ProfileImage != null)
+                            {
+                                <img style="width: 416px; height: 555px; object-fit: cover;" src="@Url.Content($"~/{Model.ProfileImage.FilePath}")" class="img-fluid" alt="@Model.Name">
+                            }
+                        </div>
+                        <div class="member-info">
+                            <h4>@Model.Name</h4>
+                            <span>@Model.Email</span>
+                            <p><strong>Address:</strong> @Model.Address</p>
+                            <p><strong>Contact No:</strong> @Model.ContactNo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

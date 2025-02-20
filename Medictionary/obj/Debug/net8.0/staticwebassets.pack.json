@@ -257,6 +257,18 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\4ee70346-88f0-4c38-a03c-68ba78e0eff7.png",
+      "PackagePath": "staticwebassets\\user\\4ee70346-88f0-4c38-a03c-68ba78e0eff7.png"
+    },
+    {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\90d00906-24f3-4f61-b604-bc8c1869cf4e.jpg",
+      "PackagePath": "staticwebassets\\user\\90d00906-24f3-4f61-b604-bc8c1869cf4e.jpg"
+    },
+    {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\ffa16d0c-5eec-4ab7-98b3-3329f278b9ad.png",
+      "PackagePath": "staticwebassets\\user\\ffa16d0c-5eec-4ab7-98b3-3329f278b9ad.png"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Medictionary.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

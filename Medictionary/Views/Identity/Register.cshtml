@@ -1,4 +1,4 @@
-@model RegisterDTO
+@model Medictionary.DTOS.RegisterDTO
 
 @{
     ViewData["Title"] = "Sign Up";
@@ -7,18 +7,40 @@
 
 <link rel="stylesheet" href="~/css/reglogin.css" />
 
-
 <div class="signup-container">
     <div class="logo">
-        <img src="@Url.Content("~/img/Logo.png")" alt="Wagle Logo" />
+        <img src="@Url.Content("~/img/Logo.png")" alt="Medictionary Logo" />
     </div>
     <h1>Sign Up</h1>
-    <form id="account" method="post">
+    <form id="account" method="post" enctype="multipart/form-data">
 
-            <div class="form-group">
-                <input asp-for="Username" class="form-control" placeholder="Enter your Username" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+        <div class="form-group">
+            <input asp-for="Name" class="form-control" placeholder="Enter your Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Address" class="form-control" placeholder="Enter your Address" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="ContactNo" class="form-control" placeholder="Enter your Contact Number" />
+            <span asp-validation-for="ContactNo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 col-form-label">Image</label>
+            <div class="col-sm-8">
+                <input class="form-control" asp-for="ImageFile" type="file">
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Username" class="form-control" placeholder="Enter your Username" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
 
         <div class="form-group">
             <input asp-for="Password" type="password" class="form-control" placeholder="Enter Your Password" />

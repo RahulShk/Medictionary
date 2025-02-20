@@ -6,6 +6,7 @@ using Medictionary.Services.Interfaces;
 using Medictionary.Services;
 using Medictionary.Helpers;
 using Medictionary.Store;
+using Medictionary.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +17,13 @@ builder.Services.Configure<AppSettings>(appConfigSection);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped(typeof(IStore<>), typeof(Store<>));
+builder.Services.AddScoped<IUserService, UserService>(); 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IFileService, FileService>();
@@ -69,7 +71,7 @@ async Task SeedDataAsync(IServiceProvider serviceProvider)
 {
     using (var scope = serviceProvider.CreateScope())
     {
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
         var roles = new[] { "Admin", "User", "Stockiest" };
@@ -86,12 +88,21 @@ async Task SeedDataAsync(IServiceProvider serviceProvider)
     }
 }
 
-async Task CreateUserIfNotExists(UserManager<IdentityUser> userManager, string email, string password, string role)
+async Task CreateUserIfNotExists(UserManager<User> userManager, string email, string password, string role)
 {
     var user = await userManager.FindByEmailAsync(email);
     if (user == null)
     {
-        user = new IdentityUser { UserName = email, Email = email, EmailConfirmed = true };
+        user = new User
+        {
+            UserId = Guid.NewGuid().ToString(),
+            UserName = email,
+            Email = email,
+            EmailConfirmed = true,
+            Name = "User",
+            Address = "User Address",
+            ContactNo = "000-000-0000"
+        };
         var result = await userManager.CreateAsync(user, password);
         if (result.Succeeded)
         {
