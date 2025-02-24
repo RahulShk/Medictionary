@@ -46,21 +46,42 @@ namespace Medictionary.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(loginDTO.Username, loginDTO.Password, loginDTO.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                return View(loginDTO);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(loginDTO.Username, loginDTO.Password, loginDTO.RememberMe, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User logged in.");
+
+                var user = await _userManager.FindByNameAsync(loginDTO.Username);
+                var roles = await _userManager.GetRolesAsync(user);
+
+                if (roles.Contains("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else if (roles.Contains("Stockiest"))
+                {
+                    return RedirectToAction("Dashboard", "Stockiest");
+                }
+                else
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    ModelState.AddModelError(string.Empty, "Your account is locked. Please try again later.");
-                }
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
-            return View(loginDTO);
+            if (result.IsLockedOut)
+            {
+                _logger.LogWarning("User account locked out.");
+                return View("Lockout");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(loginDTO);
+            }
         }
 
         [HttpGet]
@@ -88,7 +109,7 @@ namespace Medictionary.Controllers
 
             var image = new Image
             {
-                ID = Guid.NewGuid().ToString(),
+                ImageId = Guid.NewGuid().ToString(),
                 FileName = registerDTO.ImageFile.FileName,
                 FilePath = filePath,
                 CreatedBy = User?.Identity?.Name,

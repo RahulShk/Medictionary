@@ -1,0 +1,136 @@
+@model List<Medictionary.Models.Industry>
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2 class="text-center mb-5">Industry Items</h2>
+<div class="row mb-5">
+    <div class="col">
+        <a class="btn btn-primary custom-btn" asp-controller="Admin" asp-action="Add">Create New Industry</a>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <p>No industries available.</p>
+}
+else
+{
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Drugs</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var industry in Model)
+                    {
+                        <tr>
+                            <td>@industry.Name</td>
+                            <td>@(string.IsNullOrEmpty(industry.Description) ? "No description available" : industry.Description)</td>
+                            <td>@(string.IsNullOrEmpty(industry.Location) ? "No location specified" : industry.Location)</td>
+                            <td> 
+                                <a href="@Url.Action("Medicine", "Admin", new { id = industry?.IndustryId })" class="btn btn-tertiary custom-btn">View Details</a>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="@Url.Action("Edit", "Admin", new { id = industry?.IndustryId })" class="btn btn-primary custom-btn">Edit</a>
+                                    <form asp-controller="Admin" asp-action="DeleteConfirmed" asp-route-id="@industry?.IndustryId" method="post" onsubmit="return confirm('Are you sure you want to delete this industry?');">
+                                        <button type="submit" class="btn btn-danger btn-sm custom-btn">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<style>
+    body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+
+    .table-container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .styled-table thead tr {
+            background-color: #ccc;
+            color: #000;
+            text-align: left;
+        }
+
+        .styled-table th, .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        .styled-table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .custom-btn {
+        background-color: #000;
+        color: #fff;
+        padding: 10px 15px;
+        margin: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .custom-btn:hover {
+            background-color: #333;
+        }
+
+    .btn-danger {
+        background-color: #f44336;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        align-items: center;
+        justify-content: flex-start;
+    }
+</style>

@@ -12,7 +12,6 @@ namespace Medictionary.Data
             : base(options)
         {
         }
-        public DbSet<Document> Documents { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

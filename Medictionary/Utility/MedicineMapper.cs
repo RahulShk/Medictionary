@@ -11,7 +11,7 @@ namespace Medictionary.Utility
         {
             var convertTo = new Medicine
             {
-                ID = Guid.NewGuid().ToString(),
+                MedicineID = Guid.NewGuid().ToString(),
                 IndustryID = convertFrom.IndustryID,
                 Name = convertFrom.Name,
                 Composition = convertFrom.Composition,
