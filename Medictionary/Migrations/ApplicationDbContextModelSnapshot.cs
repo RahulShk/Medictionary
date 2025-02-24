@@ -22,36 +22,134 @@ namespace Medictionary.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Medictionary.Models.Document", b =>
+            modelBuilder.Entity("Medictionary.Models.Image", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("text")
-                        .HasColumnName("id");
+                    b.Property<string>("ImageId")
+                        .HasColumnType("text");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("text")
-                        .HasColumnName("created_by");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_date");
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("FileName")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("character varying(8)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
+                        .HasColumnType("boolean");
 
-                    b.HasKey("ID");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
 
-                    b.ToTable("Documents");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasDiscriminator().HasValue("Document");
+                    b.HasKey("ImageId");
 
-                    b.UseTphMappingStrategy();
+                    b.ToTable("Image");
+                });
+
+            modelBuilder.Entity("Medictionary.Models.Industry", b =>
+                {
+                    b.Property<string>("IndustryId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("IndustryId");
+
+                    b.ToTable("Industries");
+                });
+
+            modelBuilder.Entity("Medictionary.Models.Medicine", b =>
+                {
+                    b.Property<string>("MedicineID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Batch")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Composition")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ExpiryDate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IndustryID")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Manufacturer")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ManufacturingDate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Stock")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("MedicineID");
+
+                    b.HasIndex("IndustryID");
+
+                    b.ToTable("Medicines");
                 });
 
             modelBuilder.Entity("Medictionary.Models.User", b =>
@@ -117,7 +215,7 @@ namespace Medictionary.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("ProfileImageID")
+                    b.Property<string>("ProfileImageImageId")
                         .HasColumnType("text");
 
                     b.Property<string>("SecurityStamp")
@@ -125,6 +223,12 @@ namespace Medictionary.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -143,7 +247,7 @@ namespace Medictionary.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.HasIndex("ProfileImageID");
+                    b.HasIndex("ProfileImageImageId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -176,13 +280,13 @@ namespace Medictionary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9eed44e7-a2f0-4b10-be6d-c5946009ca0c",
+                            Id = "f235f5b0-4f6c-4e63-bd8c-a869ef570169",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7f073d21-1f19-4310-a417-1740598d0b06",
+                            Id = "36ac6180-c73d-46d1-8047-d509c4454f36",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -294,101 +398,22 @@ namespace Medictionary.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Medictionary.Models.Image", b =>
-                {
-                    b.HasBaseType("Medictionary.Models.Document");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.ToTable("Documents");
-
-                    b.HasDiscriminator().HasValue("Image");
-                });
-
-            modelBuilder.Entity("Medictionary.Models.Industry", b =>
-                {
-                    b.HasBaseType("Medictionary.Models.Document");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.ToTable("Documents");
-
-                    b.HasDiscriminator().HasValue("Industry");
-                });
-
             modelBuilder.Entity("Medictionary.Models.Medicine", b =>
                 {
-                    b.HasBaseType("Medictionary.Models.Document");
+                    b.HasOne("Medictionary.Models.Industry", "Industry")
+                        .WithMany("Medicines")
+                        .HasForeignKey("IndustryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Batch")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Composition")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ExpiryDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("IndustryID")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Manufacturer")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ManufacturingDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MedicineID")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("Stock")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasIndex("IndustryID");
-
-                    b.ToTable("Documents", t =>
-                        {
-                            t.Property("Name")
-                                .HasColumnName("Medicine_Name");
-                        });
-
-                    b.HasDiscriminator().HasValue("Medicine");
+                    b.Navigation("Industry");
                 });
 
             modelBuilder.Entity("Medictionary.Models.User", b =>
                 {
                     b.HasOne("Medictionary.Models.Image", "ProfileImage")
                         .WithMany()
-                        .HasForeignKey("ProfileImageID");
+                        .HasForeignKey("ProfileImageImageId");
 
                     b.Navigation("ProfileImage");
                 });
@@ -442,17 +467,6 @@ namespace Medictionary.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Medictionary.Models.Medicine", b =>
-                {
-                    b.HasOne("Medictionary.Models.Industry", "Industry")
-                        .WithMany("Medicines")
-                        .HasForeignKey("IndustryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Industry");
                 });
 
             modelBuilder.Entity("Medictionary.Models.Industry", b =>

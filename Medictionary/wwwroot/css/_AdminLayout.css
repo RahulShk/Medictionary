@@ -2,9 +2,12 @@
   background-color: #ffffff; /* White background */
   padding: 15px 30px; /* Spacing around the navbar */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for separation */
-  display: flex; /* Align children horizontally */
-  justify-content: space-between; /* Space between logo and nav items */
-  align-items: center; /* Vertically center items */
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-brand img {
@@ -13,7 +16,7 @@
 
 .navbar-nav {
   display: flex;
-  gap: 20px; /* Space between nav items */
+  gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;

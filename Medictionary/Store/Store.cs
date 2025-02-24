@@ -8,7 +8,7 @@ using Medictionary.Data;
 namespace Medictionary.Store
 {
     public class Store<TDocument> : IStore<TDocument>
-        where TDocument : class, IDocument
+        where TDocument : class
     {
         private readonly ApplicationDbContext _context;
         private readonly DbSet<TDocument> _dbSet;

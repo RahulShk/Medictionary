@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "intZ1FTQMPYfKYQvBuCH0WKOdouq9VjX0x0GBbur2uQ=",
+  "Hash": "bxQah4qURfSxuZOvi7Ym1Vo7hvznSJ16C5dFn09vnZ4=",
   "Source": "Medictionary",
   "BasePath": "_content/Medictionary",
   "Mode": "Default",
@@ -2392,6 +2392,25 @@
       "OriginalItemSpec": "wwwroot\\user\\4ee70346-88f0-4c38-a03c-68ba78e0eff7.png"
     },
     {
+      "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\526ae239-e9ab-4c3b-8851-988033cfbe03.png",
+      "SourceId": "Medictionary",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\",
+      "BasePath": "_content/Medictionary",
+      "RelativePath": "user/526ae239-e9ab-4c3b-8851-988033cfbe03.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\user\\526ae239-e9ab-4c3b-8851-988033cfbe03.png"
+    },
+    {
       "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\90d00906-24f3-4f61-b604-bc8c1869cf4e.jpg",
       "SourceId": "Medictionary",
       "SourceType": "Discovered",
@@ -2409,6 +2428,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\user\\90d00906-24f3-4f61-b604-bc8c1869cf4e.jpg"
+    },
+    {
+      "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\a4cd0131-49fb-47d3-9c16-1e5dbc783eb4.png",
+      "SourceId": "Medictionary",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\",
+      "BasePath": "_content/Medictionary",
+      "RelativePath": "user/a4cd0131-49fb-47d3-9c16-1e5dbc783eb4.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\user\\a4cd0131-49fb-47d3-9c16-1e5dbc783eb4.png"
     },
     {
       "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\ffa16d0c-5eec-4ab7-98b3-3329f278b9ad.png",

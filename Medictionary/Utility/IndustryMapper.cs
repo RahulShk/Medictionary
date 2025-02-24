@@ -9,7 +9,7 @@ namespace Medictionary.Utility
         {
             var convertTo = new Industry
             {
-                ID = Guid.NewGuid().ToString(),
+                IndustryId = Guid.NewGuid().ToString(),
                 Name = convertFrom.Name,
                 Description = convertFrom.Description,
                 Location = convertFrom.Location
