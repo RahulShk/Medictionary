@@ -5,10 +5,10 @@ namespace Medictionary.Models
     public class Medicine
     {
         public string MedicineID { get; set; } = Guid.NewGuid().ToString();
-
         [ForeignKey("Industry")]
         public string IndustryID { get; set; }
         public Industry Industry { get; set; }
+        public Image? MedicineImage { get; set; }
         public string Name { get; set; }
         public string Composition { get; set; }
         public string Manufacturer { get; set; }

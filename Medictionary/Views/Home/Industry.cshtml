@@ -20,8 +20,9 @@ else
                             <p class="card-text" style="color: #414464; font-size: 0.9em;">
                                 @industry.Description
                             </p>
-                            <!-- Button -->
-                            <button class="btn btn-tertiary custom-btn view-details-btn" data-industry-id="@industry.IndustryId">View Medicine Details</button>
+                            <button class="btn btn-tertiary custom-btn view-details-btn" data-industry-id="@industry.IndustryId">
+                                View Medicine Details
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -31,29 +32,80 @@ else
 }
 
 <!-- Modal -->
-            <div class="modal-body">
-                <div id="medicineDetails"></div>
-            </div>
+<div id="detailsModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+        <div id="medicineDetails"></div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
-        $(document).ready(function() {
-            $('.view-details-btn').on('click', function() {
+        $(document).ready(function () {
+            $('.modal-overlay').hide(); 
+
+            $('.view-details-btn').on('click', function () {
                 var industryId = $(this).data('industry-id');
                 $.ajax({
                     url: '/Home/GetMedicines',
                     type: 'GET',
                     data: { industryId: industryId },
-                    success: function(data) {
-                        $('#medicineDetails').html(data); // Populate the modal with the fetched data
-                        $('#detailsModal').modal('show'); // Show the modal
+                    success: function (data) {
+                        $('#medicineDetails').html(data);
+                        $('.modal-overlay').fadeIn();
                     },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", xhr.responseText); // Log the error
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", xhr.responseText);
                         alert('Error retrieving medicine details.');
                     }
                 });
             });
+
+            $(document).on('click', '#closeModal', function () {
+                $('.modal-overlay').fadeOut();
+            });
         });
     </script>
 }
+
+<style>
+    .modal-overlay {
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: #f0f0f0;
+        padding: 30px;
+        border-radius: 10px;
+        width: 50%;
+        max-width: 600px;
+        text-align: center;
+        position: relative;
+    }
+
+    .modal-header {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .close-btn {
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #414464;
+    }
+</style>

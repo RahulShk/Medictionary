@@ -7,12 +7,13 @@ namespace Medictionary.Utility
 {
     public class MedicineMapper
     {
-        public static Medicine Map(MedicineDTO convertFrom)
+        public static Medicine Map(MedicineDTO convertFrom, Image image)
         {
             var convertTo = new Medicine
             {
                 MedicineID = Guid.NewGuid().ToString(),
                 IndustryID = convertFrom.IndustryID,
+                MedicineImage = image,
                 Name = convertFrom.Name,
                 Composition = convertFrom.Composition,
                 Manufacturer = convertFrom.Manufacturer,
@@ -25,12 +26,12 @@ namespace Medictionary.Utility
             return convertTo;
         }
 
-        public static List<Medicine> Map(List<MedicineDTO> convertFrom)
+        public static List<Medicine> Map(List<MedicineDTO> convertFrom, Image image)
         {
             var convertTo = new List<Medicine>();
             foreach (var item in convertFrom)
             {
-                convertTo.Add(MedicineMapper.Map(item));
+                convertTo.Add(MedicineMapper.Map(item, image));
             }
             return convertTo;
         }

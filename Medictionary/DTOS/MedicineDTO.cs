@@ -3,6 +3,7 @@ namespace Medictionary.DTOS
     public class MedicineDTO
     {
         public string IndustryID { get; set; }
+        public IFormFile? MedicineImageFile { get; set; }
         public string Name { get; set; }
         public string Composition { get; set; }
         public string Manufacturer { get; set; }

@@ -6,6 +6,7 @@ using Medictionary.Services.Interfaces;
 using Medictionary.Store.Interface;
 using Medictionary.Utility;
 using Medictionary.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Medictionary.Controllers.AdminController
 {
@@ -15,15 +16,17 @@ namespace Medictionary.Controllers.AdminController
         private readonly IFileService _fileService;
         private readonly IStore<Industry> _industryStore;
         private readonly IStore<Medicine> _medicineStore;
+        private readonly IStore<Image> _imageStore;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IWebHostEnvironment _environment;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(IFileService fileService, IStore<Industry> industryStore, IStore<Medicine> medicineStore, ApplicationDbContext applicationDbContext, IWebHostEnvironment environment, ILogger<AdminController> logger)
+        public AdminController(IFileService fileService, IStore<Industry> industryStore, IStore<Medicine> medicineStore, IStore<Image> imagestore, ApplicationDbContext applicationDbContext, IWebHostEnvironment environment, ILogger<AdminController> logger)
         {
             _fileService = fileService;
             _industryStore = industryStore;
             _medicineStore = medicineStore;
+            _imageStore = imagestore;
             _applicationDbContext = applicationDbContext;
             _environment = environment;
             _logger = logger;
@@ -165,37 +168,50 @@ namespace Medictionary.Controllers.AdminController
         }
 
         [HttpPost]
-        public IActionResult AddMedicine(MedicineDTO medicineDto)
+        public async Task<IActionResult> AddMedicine(MedicineDTO medicineDTO)
         {
-            _logger.LogInformation("AddMedicine POST method called.");
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    var medicine = MedicineMapper.Map(medicineDto);
-                    _applicationDbContext.Medicines.Add(medicine);
-                    _applicationDbContext.SaveChanges();
-                    TempData["SuccessMessage"] = "Medicine added successfully.";
-                    _logger.LogInformation("Redirecting to Medicine action.");
-                    return RedirectToAction("Medicine", new { id = medicine.IndustryID });
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "An error occurred while saving the medicine.");
-                    ModelState.AddModelError("", "An error occurred while saving the details. Please try again later.");
-                }
+                return View(medicineDTO);
             }
-            else
+
+            if (medicineDTO.MedicineImageFile == null || medicineDTO.MedicineImageFile.Length == 0)
             {
-                _logger.LogWarning("Model state is invalid.");
+                ModelState.AddModelError("MedicineImageFile", "The image file is required.");
+                return View(medicineDTO);
             }
-            return View(medicineDto);
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(medicineDTO.MedicineImageFile.FileName)}";
+            var filePath = await _fileService.SaveFileAsync("medicine", fileName, medicineDTO.MedicineImageFile);
+
+            var medicine = new Medicine
+            {
+                MedicineID = Guid.NewGuid().ToString(),
+                Name = medicineDTO.Name,
+                Composition = medicineDTO.Composition,
+                Manufacturer = medicineDTO.Manufacturer,
+                Batch = medicineDTO.Batch,
+                ManufacturingDate = medicineDTO.ManufacturingDate,
+                ExpiryDate = medicineDTO.ExpiryDate,
+                Price = medicineDTO.Price,
+                Stock = medicineDTO.Stock,
+                IndustryID = medicineDTO.IndustryID,
+                MedicineImage = new Image { FilePath = filePath, FileName = Path.GetFileName(filePath) }
+            };
+
+            _applicationDbContext.Medicines.Add(medicine);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return RedirectToAction("Medicine", new { id = medicine.IndustryID });
         }
 
         [HttpGet("medicines/{id}")]
-        public IActionResult Medicine(string id)
+        public async Task<IActionResult> Medicine(string id)
         {
-            var medicines = _applicationDbContext.Medicines.Where(m => m.IndustryID == id).ToList();
+            var medicines = await _applicationDbContext.Medicines
+                .Include(m => m.MedicineImage)
+                .Where(m => m.IndustryID == id)
+                .ToListAsync();
             return View(medicines);
         }
     }
