@@ -1,117 +1,170 @@
 @model IEnumerable<Medictionary.Models.Medicine>
 
-<div class="container mt-5">
-    @if (!Model.Any())
-    {
-        <p class="text-center text-muted">No medicines found.</p>
-    }
-    else
-    {
-        <div class="table-container">
-            <div class="table-responsive">
-                <table class="styled-table" id="medicineTable">
-                    <thead>
-                        <h3>@Model.First().Manufacturer</h3>
-                        <tr>
-                            <th>Name</th>
-                            <th>Composition</th>
-                            <th>Batch</th>
-                            <th>Manufacturing Date</th>
-                            <th>Expiry Date</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var medicine in Model)
-                        {
-                            <tr>
-                                <td>@medicine.Name</td>
-                                <td>@medicine.Composition</td>
-                                <td>@medicine.Batch</td>
-                                <td>@medicine.ManufacturingDate</td>
-                                <td>@medicine.ExpiryDate</td>
-                                <td>@medicine.Price</td>
-                                <td>@medicine.Stock</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+<div class="modal-overlay">
+    <div class="modal-content">
+        <!-- Close Button at the Top Right -->
+        <div class="modal-header">
+            <button class="close-btn" id="closeModal">&times;</button>
         </div>
-    }
+
+        <div class="modal-body">
+            @if (!Model.Any())
+            {
+                <p class="text-center text-muted">No medicines found.</p>
+            }
+            else
+            {
+                <div class="cards-container">
+                    @foreach (var medicine in Model)
+                    {
+                        <div class="medicine-card">
+                            <div class="medicine-image">
+                                @if (medicine.MedicineImage != null)
+                                {
+                                    var imagePath = Url.Content($"~/{medicine.MedicineImage.FilePath}");
+                                    <img src="@imagePath" alt="@medicine.Name">
+                                }
+                                else
+                                {
+                                    <span>No Image</span>
+                                }
+                            </div>
+                            <div class="medicine-details">
+                                <h3>@medicine.Name</h3>
+                                <p><strong>Composition:</strong> @medicine.Composition</p>
+                                <p><strong>Batch:</strong> @medicine.Batch</p>
+                                <p><strong>Manufacturing Date:</strong> @medicine.ManufacturingDate</p>
+                                <p><strong>Expiry Date:</strong> @medicine.ExpiryDate</p>
+                                <p><strong>Price:</strong> $@medicine.Price</p>
+                                <p><strong>Stock:</strong> @medicine.Stock</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.modal-overlay').hide(); 
+
+            $('.view-details-btn').on('click', function () {
+                var industryId = $(this).data('industry-id');
+                $.ajax({
+                    url: '/Home/GetMedicines',
+                    type: 'GET',
+                    data: { industryId: industryId },
+                    success: function (data) {
+                        $('#medicineDetails').html(data);
+                        $('.modal-overlay').fadeIn();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", xhr.responseText);
+                        alert('Error retrieving medicine details.');
+                    }
+                });
+            });
+
+            $(document).on('click', '#closeModal', function () {
+                $('.modal-overlay').fadeOut();
+            });
+        });
+    </script>
+}
+
 <style>
-    body {
-        background-color: #f4f4f4;
-        font-family: Arial, sans-serif;
+    /* Modal Styling */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
     }
 
-    .table-container {
-        max-width: 1200px;
-        margin: auto;
+    .modal-content {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        width: 70%;
+        max-width: 900px;
+        max-height: 80vh; /* Limits height to 80% of screen */
+        overflow-y: auto; /* Enables scrolling */
+        position: relative;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Close Button */
+    .modal-header {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .close-btn {
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #414464;
+    }
+
+    /* Scrollable Modal Body */
+    .modal-body {
+        max-height: 60vh; /* Limits the content height */
+        overflow-y: auto; /* Enables vertical scrolling */
+    }
+
+    /* Two-Column Layout for Medicines */
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+        gap: 20px;
         padding: 20px;
+    }
+
+    .medicine-card {
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .styled-table {
-        width: 100%;
-        border-collapse: collapse;
-        border-radius: 8px;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        text-align: center;
     }
 
-    .styled-table thead tr {
-        background-color: #ccc;
-        color: #000;
-        text-align: left;
+    .medicine-image img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
     }
 
-    .styled-table th, .styled-table td {
-        padding: 12px 15px;
+    .medicine-details {
+        margin-top: 10px;
     }
 
-    .styled-table tbody tr:nth-child(even) {
-        background-color: #f8f8f8;
+    .medicine-details h3 {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 5px;
     }
 
-    .styled-table tbody tr:nth-child(odd) {
-        background-color: #ffffff;
-    }
-
-    .styled-table tbody tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    .custom-btn {
-        background-color: #000;
-        color: #fff;
-        padding: 10px 15px;
-        margin: 5px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .custom-btn:hover {
-        background-color: #333;
-        color: #fff;
-    }
-
-    .btn-danger {
-        background-color: #f44336;
-        color: #fff;
-        border: none;
-        padding: 10px;
-        margin: 5px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn-danger:hover {
-        background-color: #d32f2f;
+    .medicine-details p {
+        font-size: 14px;
+        color: #666;
+        margin: 5px 0;
     }
 </style>

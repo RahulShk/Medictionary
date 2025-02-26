@@ -23,6 +23,7 @@
                 <table class="styled-table" id="medicineTable">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Composition</th>
                             <th>Manufacturer</th>
@@ -38,6 +39,16 @@
                         @foreach (var medicine in Model)
                         {
                             <tr>
+                                <td>
+                                    @if (medicine.MedicineImage != null)
+                                    {
+                                        <img src="@Url.Content($"~/{medicine.MedicineImage.FilePath}")" alt="@medicine.Name" style="width: 100px; height: auto;" />
+                                    }
+                                    else
+                                    {
+                                        <span>No Image</span>
+                                    }
+                                </td>
                                 <td>@medicine.Name</td>
                                 <td>@medicine.Composition</td>
                                 <td>@medicine.Manufacturer</td>
@@ -134,32 +145,6 @@
     .btn-danger:hover {
         background-color: #d32f2f;
     }
-
-    @* @media (max-width: 768px) {
-        .styled-table thead {
-            display: none;
-        }
-
-        .styled-table, .styled-table tbody, .styled-table tr, .styled-table td {
-            display: block;
-            width: 100%;
-        }
-
-        .styled-table td {
-            text-align: right;
-            padding-left: 50%;
-            position: relative;
-            border: none;
-        }
-
-        .styled-table td::before {
-            content: attr(data-label);
-            position: absolute;
-            left: 10px;
-            text-align: left;
-            font-weight: bold;
-        }
-    } *@
 </style>
 
 @section Scripts {
@@ -174,15 +159,15 @@
                 for (i = 1; i < (rows.length - 1); i++) {
                     shouldSwitch = false;
                     if (criteria === 'name') {
-                        x = rows[i].getElementsByTagName("TD")[0];
-                        y = rows[i + 1].getElementsByTagName("TD")[0];
+                        x = rows[i].getElementsByTagName("TD")[1];
+                        y = rows[i + 1].getElementsByTagName("TD")[1];
                         if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                             shouldSwitch = true;
                             break;
                         }
                     } else if (criteria === 'expiry') {
-                        x = new Date(rows[i].getElementsByTagName("TD")[5].innerHTML);
-                        y = new Date(rows[i + 1].getElementsByTagName("TD")[5].innerHTML);
+                        x = new Date(rows[i].getElementsByTagName("TD")[6].innerHTML);
+                        y = new Date(rows[i + 1].getElementsByTagName("TD")[6].innerHTML);
                         if (x < y) {
                             shouldSwitch = true;
                             break;

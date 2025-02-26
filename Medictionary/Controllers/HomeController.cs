@@ -90,7 +90,9 @@ namespace Medictionary.Controllers
         [HttpGet]
         public IActionResult GetMedicines(string industryId)
         {
-            var medicines = _applicationDbContext.Medicines.Where(m => m.IndustryID == industryId)
+            var medicines = _applicationDbContext.Medicines
+                .Where(m => m.IndustryID == industryId)
+                .Include(m => m.MedicineImage)
                 .ToList();
 
             return PartialView("_MedicineDetails", medicines);
