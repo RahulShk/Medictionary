@@ -7,6 +7,7 @@ using Medictionary.Services;
 using Medictionary.Helpers;
 using Medictionary.Store;
 using Medictionary.Models;
+using Medictionary.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,9 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped(typeof(IStore<>), typeof(Store<>));
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<IUserService, UserService>(); 
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IFileService, FileService>();
