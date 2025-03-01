@@ -16,7 +16,7 @@ namespace Medictionary.Models
         public string ManufacturingDate { get; set; }
         public string ExpiryDate { get; set; }
         public decimal Price { get; set; }
-        public string Stock { get; set; }
+        public int Stock { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public string? CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; } = DateTime.UtcNow;

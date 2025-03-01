@@ -3,6 +3,7 @@ using System;
 using Medictionary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medictionary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250227162635_EditStockDataTypeToInteger")]
+    partial class EditStockDataTypeToInteger
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,44 +159,6 @@ namespace Medictionary.Migrations
                     b.ToTable("Medicines");
                 });
 
-            modelBuilder.Entity("Medictionary.Models.StockiestMedicine", b =>
-                {
-                    b.Property<string>("StockiestID")
-                        .HasColumnType("text")
-                        .HasColumnOrder(0);
-
-                    b.Property<string>("MedicineID")
-                        .HasColumnType("text")
-                        .HasColumnOrder(1);
-
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("StockiestID", "MedicineID");
-
-                    b.HasIndex("MedicineID");
-
-                    b.ToTable("StockiestMedicines");
-                });
-
             modelBuilder.Entity("Medictionary.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -322,21 +287,15 @@ namespace Medictionary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ab54aacd-05a4-4142-86e7-714a9e0aa3ca",
+                            Id = "642e83b8-d9fb-4e4e-bcc0-27c2f0c6cae9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8040c6bd-8016-4355-878b-c14046eee10c",
+                            Id = "dde1454a-129c-431c-91c3-d7e41e89002c",
                             Name = "User",
                             NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "39f6b538-918e-4f97-b780-9f9168928f63",
-                            Name = "Stockiest",
-                            NormalizedName = "STOCKIEST"
                         });
                 });
 
@@ -461,25 +420,6 @@ namespace Medictionary.Migrations
                     b.Navigation("Industry");
 
                     b.Navigation("MedicineImage");
-                });
-
-            modelBuilder.Entity("Medictionary.Models.StockiestMedicine", b =>
-                {
-                    b.HasOne("Medictionary.Models.Medicine", "Medicine")
-                        .WithMany()
-                        .HasForeignKey("MedicineID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Medictionary.Models.User", "Stockiest")
-                        .WithMany()
-                        .HasForeignKey("StockiestID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Medicine");
-
-                    b.Navigation("Stockiest");
                 });
 
             modelBuilder.Entity("Medictionary.Models.User", b =>

@@ -3,6 +3,7 @@ using System;
 using Medictionary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medictionary.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250301084011_StockiestMedicineTableCreated")]
+    partial class StockiestMedicineTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -322,19 +325,19 @@ namespace Medictionary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ab54aacd-05a4-4142-86e7-714a9e0aa3ca",
+                            Id = "cb8efd16-a4eb-404e-b4a0-3b7d184c2045",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8040c6bd-8016-4355-878b-c14046eee10c",
+                            Id = "483166d2-9778-4fa8-ab29-4fe733d59516",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "39f6b538-918e-4f97-b780-9f9168928f63",
+                            Id = "099d0ddf-4705-408c-af8b-656f5595a8d9",
                             Name = "Stockiest",
                             NormalizedName = "STOCKIEST"
                         });

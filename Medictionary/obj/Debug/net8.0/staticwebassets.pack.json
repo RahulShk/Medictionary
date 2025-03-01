@@ -257,6 +257,14 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\medicine\\2b44b5b9-d21c-4b78-921f-cac7a8fb6ac6.png",
+      "PackagePath": "staticwebassets\\medicine\\2b44b5b9-d21c-4b78-921f-cac7a8fb6ac6.png"
+    },
+    {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\medicine\\553f0551-b408-403b-9cae-2cd059562ee2.png",
+      "PackagePath": "staticwebassets\\medicine\\553f0551-b408-403b-9cae-2cd059562ee2.png"
+    },
+    {
       "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\medicine\\d35cbd05-b519-491c-8dd9-cb9982fa6c46.png",
       "PackagePath": "staticwebassets\\medicine\\d35cbd05-b519-491c-8dd9-cb9982fa6c46.png"
     },
@@ -291,6 +299,14 @@
     {
       "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\7e497150-8527-4bd3-960d-afe036c0c1a0.png",
       "PackagePath": "staticwebassets\\user\\7e497150-8527-4bd3-960d-afe036c0c1a0.png"
+    },
+    {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\826d057e-7c10-48b7-8355-9ece7a5ad8d5.png",
+      "PackagePath": "staticwebassets\\user\\826d057e-7c10-48b7-8355-9ece7a5ad8d5.png"
+    },
+    {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\8a458c99-21b5-42ca-a52f-b91543272232.png",
+      "PackagePath": "staticwebassets\\user\\8a458c99-21b5-42ca-a52f-b91543272232.png"
     },
     {
       "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\90d00906-24f3-4f61-b604-bc8c1869cf4e.jpg",

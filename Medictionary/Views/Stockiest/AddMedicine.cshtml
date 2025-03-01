@@ -1,0 +1,75 @@
+@model Medictionary.DTOS.MedicineDTO
+
+@{
+    ViewBag.Title = "Add Medicine";
+}
+
+<h2>Add Medicine</h2>
+
+<form asp-action="AddMedicine" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Composition"></label>
+        <input asp-for="Composition" class="form-control" />
+        <span asp-validation-for="Composition" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Manufacturer"></label>
+        <input asp-for="Manufacturer" class="form-control" />
+        <span asp-validation-for="Manufacturer" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Batch"></label>
+        <input asp-for="Batch" class="form-control" />
+        <span asp-validation-for="Batch" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ManufacturingDate"></label>
+        <input asp-for="ManufacturingDate" class="form-control" />
+        <span asp-validation-for="ManufacturingDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ExpiryDate"></label>
+        <input asp-for="ExpiryDate" class="form-control" />
+        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="IndustryID">Industry</label>
+        <select asp-for="IndustryID" class="form-control">
+            @foreach (var industry in ViewBag.Industries)
+            {
+                <option value="@industry.IndustryID">@industry.Name</option>
+            }
+        </select>
+        <span asp-validation-for="IndustryID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Rs.</span>
+            </div>
+            <input asp-for="Price" class="form-control" />
+        </div>
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Stock"></label>
+        <input asp-for="Stock" class="form-control" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MedicineImageFile">Medicine Image</label>
+        <input asp-for="MedicineImageFile" type="file" class="form-control" />
+        <span asp-validation-for="MedicineImageFile" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Medicine</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
