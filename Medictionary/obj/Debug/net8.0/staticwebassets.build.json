@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1nPX9X4fAxTIpERL6EZNtuEjV0yGeCu9sKbkNlCxs9A=",
+  "Hash": "Sp1Lz6qxKnhR/A3JxMQyqEMdrVvu3bNR055d1BbOcTc=",
   "Source": "Medictionary",
   "BasePath": "_content/Medictionary",
   "Mode": "Default",
@@ -2542,6 +2542,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\user\\526ae239-e9ab-4c3b-8851-988033cfbe03.png"
+    },
+    {
+      "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\555b5718-f9bf-4d03-a8d8-fc49b8238d3f.png",
+      "SourceId": "Medictionary",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\",
+      "BasePath": "_content/Medictionary",
+      "RelativePath": "user/555b5718-f9bf-4d03-a8d8-fc49b8238d3f.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\user\\555b5718-f9bf-4d03-a8d8-fc49b8238d3f.png"
     },
     {
       "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\7617b8fa-ab07-4c48-b81e-7da97a56a949.png",
