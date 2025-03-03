@@ -79,6 +79,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "plugin.web.eSewa.and.Khalti": {
+              "target": "Package",
+              "version": "[1.0.11, )"
             }
           },
           "imports": [
