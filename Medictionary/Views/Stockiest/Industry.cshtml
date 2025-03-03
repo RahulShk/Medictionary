@@ -3,6 +3,9 @@
 @{
     Layout = "_StockiestLayout";
 }
+    <form method="post" asp-controller="Payment" asp-action="PayWitheSewa">
+        <button type="submit" class="btn btn-success">Pay with eSewa</button>
+    </form>
 @if (Model == null || !Model.Any())
 {
     <div class="alert alert-info text-center mt-5" style="color: #414464; font-weight: bold;">

@@ -176,3 +176,5 @@ C:\Users\Acer\source\repos\Medictionary\Medictionary\obj\Debug\net8.0\refint\Med
 C:\Users\Acer\source\repos\Medictionary\Medictionary\obj\Debug\net8.0\Medictionary.pdb
 C:\Users\Acer\source\repos\Medictionary\Medictionary\obj\Debug\net8.0\Medictionary.genruntimeconfig.cache
 C:\Users\Acer\source\repos\Medictionary\Medictionary\obj\Debug\net8.0\ref\Medictionary.dll
+c:\Users\Acer\source\repos\Medictionary\Medictionary\bin\Debug\net8.0\Newtonsoft.Json.dll
+c:\Users\Acer\source\repos\Medictionary\Medictionary\bin\Debug\net8.0\payment-gateway-nepal.dll

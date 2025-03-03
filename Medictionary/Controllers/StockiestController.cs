@@ -142,20 +142,34 @@ namespace Medictionary.Controllers
             // Get the logged-in user's ID
             var stockiestID = _userManager.GetUserId(User);
 
-            // Add the medicine to the stockiest's inventory
-            var stockiestMedicine = new StockiestMedicine
+            // Check if the medicine already exists in the stockiest's inventory
+            var existingStock = await _applicationDbContext.StockiestMedicines
+                .FirstOrDefaultAsync(sm => sm.StockiestID == stockiestID && sm.MedicineID == MedicineID);
+
+            if (existingStock != null)
             {
-                StockiestID = stockiestID,
-                MedicineID = MedicineID,
-                Quantity = Quantity,
-                AddedDate = DateTime.UtcNow,
-                CreatedBy = User?.Identity?.Name,
-                CreatedDate = DateTime.UtcNow,
-                UpdatedBy = User?.Identity?.Name,
-                UpdatedDate = DateTime.UtcNow,
-                IsDeleted = false
-            };
-            _applicationDbContext.StockiestMedicines.Add(stockiestMedicine);
+                // Update the quantity if the medicine already exists
+                existingStock.Quantity += Quantity;
+                existingStock.UpdatedBy = User?.Identity?.Name;
+                existingStock.UpdatedDate = DateTime.UtcNow;
+            }
+            else
+            {
+                // Add the medicine to the stockiest's inventory
+                var stockiestMedicine = new StockiestMedicine
+                {
+                    StockiestID = stockiestID,
+                    MedicineID = MedicineID,
+                    Quantity = Quantity,
+                    AddedDate = DateTime.UtcNow,
+                    CreatedBy = User?.Identity?.Name,
+                    CreatedDate = DateTime.UtcNow,
+                    UpdatedBy = User?.Identity?.Name,
+                    UpdatedDate = DateTime.UtcNow,
+                    IsDeleted = false
+                };
+                _applicationDbContext.StockiestMedicines.Add(stockiestMedicine);
+            }
 
             await _applicationDbContext.SaveChangesAsync();
 
@@ -177,9 +191,10 @@ namespace Medictionary.Controllers
         {
             try
             {
+                var userId = _userManager.GetUserId(User);
                 var stockDetails = await _applicationDbContext.StockiestMedicines
                     .Include(sm => sm.Medicine)
-                    .Include(sm => sm.Stockiest)
+                    .Where(sm => sm.StockiestID == userId)
                     .ToListAsync();
 
                 return View(stockDetails);
