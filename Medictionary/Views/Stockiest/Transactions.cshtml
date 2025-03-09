@@ -1,0 +1,42 @@
+@model IEnumerable<Medictionary.Models.StockiestTransactionRecord>
+
+@{
+    ViewData["Title"] = "Transactions";
+}
+
+<h2>Transactions</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Industry Name</th>
+            <th>Medicine Name</th>
+            <th>Quantity</th>
+            <th>MRP</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.Medicine.Name</td>
+                <td>@transaction.Medicine.IndustryID</td>
+                <td>@transaction.Quantity</td>
+                <td>@transaction.MRP</td>
+                <td>@transaction.Date.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    h2 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        margin-top: 20px;
+    }
+</style>

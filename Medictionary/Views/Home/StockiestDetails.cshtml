@@ -1,0 +1,67 @@
+@model IEnumerable<Medictionary.Models.User>
+
+@{
+    ViewData["Title"] = "Stockiest Details";
+}
+
+<h2>Stockiest Details</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-center text-muted">No stockiests found.</p>
+}
+else
+{
+    <div class="cards-container">
+        @foreach (var stockiest in Model)
+        {
+            <div class="stockiest-card">
+                <div class="stockiest-details">
+                    <h3>@stockiest.Name</h3>
+                    <p><strong>Email:</strong> @stockiest.Email</p>
+                    <p><strong>Phone:</strong> @stockiest.PhoneNumber</p>
+                    <p><strong>Address:</strong> @stockiest.Address</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<style>
+    /* Card Container */
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* Two cards per row */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    /* Stockiest Card */
+    .stockiest-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .stockiest-details {
+        margin-top: 10px;
+    }
+
+    .stockiest-details h3 {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .stockiest-details p {
+        font-size: 14px;
+        color: #666;
+        margin: 5px 0;
+    }
+</style>

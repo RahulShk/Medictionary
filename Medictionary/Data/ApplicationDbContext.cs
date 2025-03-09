@@ -13,9 +13,10 @@ namespace Medictionary.Data
         {
         }
 
-        public DbSet<StockiestMedicine> StockiestMedicines { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<StockiestMedicine> StockiestMedicines { get; set; }
+        public DbSet<StockiestTransactionRecord> StockiestTransactionRecords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +46,17 @@ namespace Medictionary.Data
                 .HasOne(m => m.Industry)
                 .WithMany(i => i.Medicines)
                 .HasForeignKey(m => m.IndustryID);
+
+            // Configure relationships for StockiestTransactionRecord
+            modelBuilder.Entity<StockiestTransactionRecord>()
+                .HasOne(tr => tr.Medicine)
+                .WithMany()
+                .HasForeignKey(tr => tr.MedicineID);
+
+            modelBuilder.Entity<StockiestTransactionRecord>()
+                .HasOne(tr => tr.Stockiest)
+                .WithMany()
+                .HasForeignKey(tr => tr.StockiestID);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
