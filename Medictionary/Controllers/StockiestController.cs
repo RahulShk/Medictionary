@@ -171,6 +171,21 @@ namespace Medictionary.Controllers
                 _applicationDbContext.StockiestMedicines.Add(stockiestMedicine);
             }
 
+            // Create a new transaction record
+            var transactionRecord = new StockiestTransactionRecord
+            {
+                StockiestID = stockiestID,
+                MedicineID = MedicineID,
+                Quantity = Quantity,
+                MRP = medicine.Price,
+                Date = DateTime.UtcNow,
+                CreatedBy = User?.Identity?.Name,
+                CreatedDate = DateTime.UtcNow
+            };
+
+            // Save the transaction record
+            _applicationDbContext.StockiestTransactionRecords.Add(transactionRecord);
+
             await _applicationDbContext.SaveChangesAsync();
 
             return RedirectToAction("Dashboard");
@@ -204,6 +219,16 @@ namespace Medictionary.Controllers
                 _logger.LogError(ex, "Error retrieving stock details.");
                 return View("Error");
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Transactions()
+        {
+            var transactions = await _applicationDbContext.StockiestTransactionRecords
+                .Include(tr => tr.Medicine)
+                .ThenInclude(m => m.Industry)
+                .ToListAsync();
+            return View(transactions);
         }
     }
 }

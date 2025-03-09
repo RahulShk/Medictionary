@@ -97,5 +97,22 @@ namespace Medictionary.Controllers
 
             return PartialView("_MedicineDetails", medicines);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetStockiests(string medicineId)
+        {
+            if (string.IsNullOrEmpty(medicineId))
+            {
+                return BadRequest("Invalid medicine ID.");
+            }
+
+            var stockiests = await _applicationDbContext.StockiestMedicines
+                .Where(sm => sm.MedicineID == medicineId)
+                .Include(sm => sm.Stockiest)
+                .Select(sm => sm.Stockiest)
+                .ToListAsync();
+
+            return View("StockiestDetails", stockiests);
+        }
     }
 }

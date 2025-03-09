@@ -2,11 +2,9 @@
 
 <div class="modal-overlay">
     <div class="modal-content">
-        <!-- Close Button at the Top Right -->
         <div class="modal-header">
             <button class="close-btn" id="closeModal">&times;</button>
         </div>
-
         <div class="modal-body">
             @if (!Model.Any())
             {
@@ -37,6 +35,7 @@
                                 <p><strong>Expiry Date:</strong> @medicine.ExpiryDate</p>
                                 <p><strong>Price:</strong> $@medicine.Price</p>
                                 <p><strong>Stock:</strong> @medicine.Stock</p>
+                                <a class="view-stockiest-btn btn btn-primary" asp-controller="Home" asp-action="GetStockiests" asp-route-medicineId="@medicine.MedicineID">View Stockiests</a>
                             </div>
                         </div>
                     }
@@ -49,25 +48,10 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('.modal-overlay').hide(); 
+            // Hide the modal overlay initially
+            $('.modal-overlay').hide();
 
-            $('.view-details-btn').on('click', function () {
-                var industryId = $(this).data('industry-id');
-                $.ajax({
-                    url: '/Home/GetMedicines',
-                    type: 'GET',
-                    data: { industryId: industryId },
-                    success: function (data) {
-                        $('#medicineDetails').html(data);
-                        $('.modal-overlay').fadeIn();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX Error:", xhr.responseText);
-                        alert('Error retrieving medicine details.');
-                    }
-                });
-            });
-
+            // Close modal when clicking the close button
             $(document).on('click', '#closeModal', function () {
                 $('.modal-overlay').fadeOut();
             });
@@ -105,13 +89,13 @@
 
     /* Close Button */
     .modal-header {
-        position: absolute;
-        top: 10px;
-        right: 10px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 5px;
     }
 
     .close-btn {
-        background: transparent;
+        background: none;
         border: none;
         font-size: 24px;
         font-weight: bold;

@@ -40,8 +40,10 @@ else
 @section Scripts {
     <script>
         $(document).ready(function () {
+            // Hide the modal overlay initially
             $('.modal-overlay').hide();
 
+            // Show the modal when the "View Medicine Details" button is clicked
             $('.view-details-btn').on('click', function () {
                 var industryId = $(this).data('industry-id');
                 $.ajax({
@@ -50,7 +52,7 @@ else
                     data: { industryId: industryId },
                     success: function (data) {
                         $('#medicineDetails').html(data);
-                        $('.modal-overlay').fadeIn();
+                        $('#detailsModal').fadeIn();
                     },
                     error: function (xhr, status, error) {
                         console.error("AJAX Error:", xhr.responseText);
@@ -59,8 +61,16 @@ else
                 });
             });
 
+            // Close modal when clicking the close button
             $(document).on('click', '#closeModal', function () {
-                $('.modal-overlay').fadeOut();
+                $('#detailsModal').fadeOut();
+            });
+
+            // Close modal when clicking outside the content
+            $(document).on('click', '.modal-overlay', function (e) {
+                if ($(e.target).closest('.modal-content').length === 0) {
+                    $(this).fadeOut();
+                }
             });
         });
     </script>
@@ -130,10 +140,10 @@ else
 
     .modal-content {
         background: #fff;
-        padding: 30px;
+        padding: 20px;
         border-radius: 10px;
-        width: 70%;
-        max-width: 900px;
+        width: 50%;
+        max-width: 600px;
         max-height: 80vh;
         overflow-y: auto;
         position: relative;
@@ -142,15 +152,15 @@ else
 
     /* Close Button */
     .modal-header {
-        position: absolute;
-        top: 10px;
-        right: 10px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 5px;
     }
 
     .close-btn {
-        background: transparent;
+        background: none;
         border: none;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: bold;
         cursor: pointer;
         color: #414464;
