@@ -1,0 +1,43 @@
+@model IEnumerable<Medictionary.DTOS.StockiestRequestDTO>
+
+@{
+    ViewData["Title"] = "Manage Requests";
+}
+
+<h2>Manage Requests</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Stockiest</th>
+            <th>Industry</th>
+            <th>Request Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@request.StockiestName</td>
+                <td>@request.IndustryName</td>
+                <td>@request.RequestDate.ToString("yyyy-MM-dd")</td>
+                <td>@request.Status</td>
+                <td>
+                    @if (request.Status == "Pending")
+                    {
+                        <form asp-action="ApproveStockiestRequest" method="post" style="display:inline;">
+                            <input type="hidden" name="requestId" value="@request.RequestID" />
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        </form>
+                        <form asp-action="RejectStockiestRequest" method="post" style="display:inline;">
+                            <input type="hidden" name="requestId" value="@request.RequestID" />
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

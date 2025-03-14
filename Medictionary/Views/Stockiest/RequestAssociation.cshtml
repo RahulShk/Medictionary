@@ -1,0 +1,24 @@
+@model Medictionary.DTOS.StockiestRequestDTO
+
+@{
+    ViewData["Title"] = "Request Association";
+}
+
+@{
+    Layout = "_StockiestLayout";
+}
+
+<h2>Request Association</h2>
+
+<form asp-action="RequestAssociation" method="post">
+    <div class="form-group">
+        <label for="industryId">Select Industry</label>
+        <select id="industryId" name="industryId" class="form-control">
+            @foreach (var industry in ViewBag.Industries)
+            {
+                <option value="@industry.IndustryId">@industry.Name</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Request</button>
+</form>

@@ -35,7 +35,6 @@
                                 <p><strong>Expiry Date:</strong> @medicine.ExpiryDate</p>
                                 <p><strong>Price:</strong> $@medicine.Price</p>
                                 <p><strong>Stock:</strong> @medicine.Stock</p>
-                                <a class="view-stockiest-btn btn btn-primary" asp-controller="Home" asp-action="GetStockiests" asp-route-medicineId="@medicine.MedicineID">View Stockiests</a>
                             </div>
                         </div>
                     }
@@ -44,20 +43,6 @@
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            // Hide the modal overlay initially
-            $('.modal-overlay').hide();
-
-            // Close modal when clicking the close button
-            $(document).on('click', '#closeModal', function () {
-                $('.modal-overlay').fadeOut();
-            });
-        });
-    </script>
-}
 
 <style>
     /* Modal Styling */

@@ -46,6 +46,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Admin/ManageStockiestRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlU3RvY2tpZXN0UmVxdWVzdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Admin/Medicine.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWVkaWNpbmUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -68,6 +72,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Home/_MedicineDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfTWVkaWNpbmVEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Home/_StockiestDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfU3RvY2tpZXN0RGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Identity/ConfirmEmail.cshtml]
@@ -136,6 +144,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Stockiest/Inventory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvY2tpZXN0XEludmVudG9yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Stockiest/RequestAssociation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvY2tpZXN0XFJlcXVlc3RBc3NvY2lhdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [c:/Users/Acer/source/repos/Medictionary/Medictionary/Views/Stockiest/Transactions.cshtml]
