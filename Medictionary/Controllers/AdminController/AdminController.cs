@@ -214,5 +214,49 @@ namespace Medictionary.Controllers.AdminController
                 .ToListAsync();
             return View(medicines);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ManageStockiestRequests()
+        {
+            var requests = await _applicationDbContext.StockiestRequests
+                .Include(sr => sr.Stockiest)
+                .Include(sr => sr.Industry)
+                .Select(sr => new StockiestRequestDTO
+                {
+                    RequestID = sr.RequestID,
+                    StockiestID = sr.StockiestID,
+                    IndustryID = sr.IndustryID,
+                    RequestDate = sr.RequestDate,
+                    Status = sr.Status,
+                    StockiestName = sr.Stockiest.UserName,
+                    IndustryName = sr.Industry.Name
+                })
+                .ToListAsync();
+            return View(requests);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ApproveStockiestRequest(int requestId)
+        {
+            var request = await _applicationDbContext.StockiestRequests.FindAsync(requestId);
+            if (request != null)
+            {
+                request.Status = "Approved";
+                await _applicationDbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("ManageRequests");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RejectStockiestRequest(int requestId)
+        {
+            var request = await _applicationDbContext.StockiestRequests.FindAsync(requestId);
+            if (request != null)
+            {
+                request.Status = "Rejected";
+                await _applicationDbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("ManageRequests");
+        }
     }
 }

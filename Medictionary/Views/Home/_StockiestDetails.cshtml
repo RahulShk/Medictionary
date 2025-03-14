@@ -1,0 +1,71 @@
+@model IEnumerable<Medictionary.Models.StockiestRequest>
+
+<h2>Approved Stockiests</h2>
+
+@if (!Model.Any())
+{
+    <p>No approved stockiests available for this industry.</p>
+}
+else
+{
+    <div class="stockiest-cards">
+        @foreach (var stockiestRequest in Model)
+        {
+            <div class="stockiest-card">
+                <div class="stockiest-card-header">
+                    <h3>@stockiestRequest.Stockiest.UserName</h3>
+                </div>
+                <div class="stockiest-card-body">
+                    <p><strong>Address:</strong> @stockiestRequest.Stockiest.Address</p>
+                    <p><strong>Contact:</strong> @stockiestRequest.Stockiest.PhoneNumber</p>
+                    <p><strong>Email:</strong> @stockiestRequest.Stockiest.Email</p>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<style>
+    .stockiest-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Two columns */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .stockiest-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .stockiest-card-header {
+        background-color: #414464;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .stockiest-card-body {
+        padding: 15px;
+        width: 100%;
+    }
+
+    .stockiest-card-body p {
+        margin: 5px 0;
+    }
+
+    @* /* Responsive Design */
+    @media (max-width: 768px) {
+        .stockiest-cards {
+            grid-template-columns: 1fr; /* One column */
+        }
+    } *@
+</style>

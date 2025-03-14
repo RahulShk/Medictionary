@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Sp1Lz6qxKnhR/A3JxMQyqEMdrVvu3bNR055d1BbOcTc=",
+  "Hash": "soWAj9S2JTqs49V/B8iEAx1DzhLnHt2RxEM3Zk337PI=",
   "Source": "Medictionary",
   "BasePath": "_content/Medictionary",
   "Mode": "Default",
@@ -2447,6 +2447,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\medicine\\fd3380eb-53ff-4f79-a5a8-ad3f12cca461.png"
+    },
+    {
+      "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\tailwind.config.js",
+      "SourceId": "Medictionary",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\",
+      "BasePath": "_content/Medictionary",
+      "RelativePath": "tailwind.config.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\tailwind.config.js"
     },
     {
       "Identity": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\user\\2af82687-d107-4736-9d27-d962fdb83461.png",

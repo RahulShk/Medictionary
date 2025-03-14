@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
+using System.Diagnostics;
 
 namespace Medictionary.Controllers
 {
@@ -136,11 +137,21 @@ namespace Medictionary.Controllers
                 return BadRequest("Not enough stock available in the industry.");
             }
 
-            // Update the stock in the industry's inventory
-            medicine.Stock -= Quantity;
-
             // Get the logged-in user's ID
             var stockiestID = _userManager.GetUserId(User);
+
+            // Check if the stockiest has an approved request for the industry
+            var approvedRequest = await _applicationDbContext.StockiestRequests
+                .FirstOrDefaultAsync(sr => sr.StockiestID == stockiestID && sr.IndustryID == medicine.IndustryID && sr.Status == "Approved");
+
+            if (approvedRequest == null)
+            {
+                ViewBag.Message = "You are not approved to add stock for this industry.";
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+
+            // Update the stock in the industry's inventory
+            medicine.Stock -= Quantity;
 
             // Check if the medicine already exists in the stockiest's inventory
             var existingStock = await _applicationDbContext.StockiestMedicines
@@ -219,6 +230,41 @@ namespace Medictionary.Controllers
                 _logger.LogError(ex, "Error retrieving stock details.");
                 return View("Error");
             }
+        }
+
+        [HttpGet]
+        public IActionResult RequestAssociation()
+        {
+            var industries = _applicationDbContext.Industries.ToList();
+            ViewBag.Industries = industries;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RequestAssociation(string industryId)
+        {
+            var stockiestID = _userManager.GetUserId(User);
+
+            var request = new StockiestRequestDTO
+            {
+                StockiestID = stockiestID,
+                IndustryID = industryId,
+                RequestDate = DateTime.UtcNow,
+                Status = "Pending"
+            };
+
+            var stockiestRequest = new StockiestRequest
+            {
+                StockiestID = request.StockiestID,
+                IndustryID = request.IndustryID,
+                RequestDate = request.RequestDate,
+                Status = request.Status
+            };
+
+            _applicationDbContext.StockiestRequests.Add(stockiestRequest);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return RedirectToAction("Dashboard");
         }
 
         [HttpGet]

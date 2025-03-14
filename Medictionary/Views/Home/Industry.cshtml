@@ -20,6 +20,9 @@ else
                         <button class="btn btn-tertiary custom-btn view-details-btn" data-industry-id="@industry.IndustryId">
                             View Medicine Details
                         </button>
+                        <button class="btn btn-tertiary custom-btn view-stockiests-btn" data-industry-id="@industry.IndustryId">
+                            View Stockiests
+                        </button>
                     </div>
                 </div>
             }
@@ -33,7 +36,7 @@ else
         <div class="modal-header">
             <button class="close-btn" id="closeModal">&times;</button>
         </div>
-        <div id="medicineDetails"></div>
+        <div id="modalContent"></div>
     </div>
 </div>
 
@@ -51,12 +54,30 @@ else
                     type: 'GET',
                     data: { industryId: industryId },
                     success: function (data) {
-                        $('#medicineDetails').html(data);
+                        $('#modalContent').html(data);
                         $('#detailsModal').fadeIn();
                     },
                     error: function (xhr, status, error) {
                         console.error("AJAX Error:", xhr.responseText);
                         alert('Error retrieving medicine details.');
+                    }
+                });
+            });
+
+            // Show the modal when the "View Stockiests" button is clicked
+            $('.view-stockiests-btn').on('click', function () {
+                var industryId = $(this).data('industry-id');
+                $.ajax({
+                    url: '/Home/GetStockiests',
+                    type: 'GET',
+                    data: { industryId: industryId },
+                    success: function (data) {
+                        $('#modalContent').html(data);
+                        $('#detailsModal').fadeIn();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", xhr.responseText);
+                        alert('Error retrieving stockiest details.');
                     }
                 });
             });
@@ -121,6 +142,21 @@ else
         font-size: 14px;
         color: #666;
         margin: 5px 0;
+    }
+
+    /* Button Styling */
+    .btn-tertiary.custom-btn {
+        background-color: #414464;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .btn-tertiary.custom-btn:hover {
+        background-color: #333;
     }
 
     /* Modal Styling */

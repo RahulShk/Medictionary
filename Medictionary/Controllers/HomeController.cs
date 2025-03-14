@@ -98,21 +98,32 @@ namespace Medictionary.Controllers
             return PartialView("_MedicineDetails", medicines);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetStockiests(string medicineId)
-        {
-            if (string.IsNullOrEmpty(medicineId))
-            {
-                return BadRequest("Invalid medicine ID.");
-            }
+        // [HttpGet]
+        // public async Task<IActionResult> GetStockiests(string medicineId)
+        // {
+        //     if (string.IsNullOrEmpty(medicineId))
+        //     {
+        //         return BadRequest("Invalid medicine ID.");
+        //     }
 
-            var stockiests = await _applicationDbContext.StockiestMedicines
-                .Where(sm => sm.MedicineID == medicineId)
-                .Include(sm => sm.Stockiest)
-                .Select(sm => sm.Stockiest)
+        //     var stockiests = await _applicationDbContext.StockiestMedicines
+        //         .Where(sm => sm.MedicineID == medicineId)
+        //         .Include(sm => sm.Stockiest)
+        //         .Select(sm => sm.Stockiest)
+        //         .ToListAsync();
+
+        //     return View("StockiestDetails", stockiests);
+        // }
+
+        [HttpGet]
+        public async Task<IActionResult> GetStockiests(string industryId)
+        {
+            var approvedStockiests = await _applicationDbContext.StockiestRequests
+                .Where(sr => sr.IndustryID == industryId && sr.Status == "Approved")
+                .Include(sr => sr.Stockiest)
                 .ToListAsync();
 
-            return View("StockiestDetails", stockiests);
+            return PartialView("_StockiestDetails", approvedStockiests);
         }
     }
 }
