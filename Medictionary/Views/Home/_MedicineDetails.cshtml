@@ -1,7 +1,12 @@
 @model IEnumerable<Medictionary.Models.Medicine>
 
+@{
+    Layout="_Layout";
+}
+
 <div class="modal-overlay">
     <div class="modal-content">
+        <h2 style="text-align: center;">Products of @ViewBag.IndustryName</h2>
         <div class="modal-header">
             <button class="close-btn" id="closeModal">&times;</button>
         </div>
@@ -12,37 +17,74 @@
             }
             else
             {
-                <div class="cards-container">
-                    @foreach (var medicine in Model)
-                    {
-                        <div class="medicine-card">
-                            <div class="medicine-image">
-                                @if (medicine.MedicineImage != null)
-                                {
-                                    var imagePath = Url.Content($"~/{medicine.MedicineImage.FilePath}");
-                                    <img src="@imagePath" alt="@medicine.Name">
-                                }
-                                else
-                                {
-                                    <span>No Image</span>
-                                }
+                <div class="cards-wrapper">
+                    <div class="cards-container">
+                        @foreach (var medicine in Model)
+                        {
+                            <div class="medicine-card">
+                                <div class="medicine-image">
+                                    @if (medicine.MedicineImage != null)
+                                    {
+                                        var imagePath = Url.Content($"~/{medicine.MedicineImage.FilePath}");
+                                        <img src="@imagePath" alt="@medicine.Name">
+                                    }
+                                    else
+                                    {
+                                        <span>No Image</span>
+                                    }
+                                </div>
+                                <div class="medicine-details">
+                                    <h3>@medicine.Name</h3>
+                                    <p><strong>Composition:</strong> @medicine.Composition</p>
+                                    <p><strong>Price:</strong> Rs. @medicine.Price</p>
+                                    <button class="add-to-cart-btn" data-medicine-id="@medicine.MedicineID">Add to Cart</button>
+                                </div>
                             </div>
-                            <div class="medicine-details">
-                                <h3>@medicine.Name</h3>
-                                <p><strong>Composition:</strong> @medicine.Composition</p>
-                                <p><strong>Batch:</strong> @medicine.Batch</p>
-                                <p><strong>Manufacturing Date:</strong> @medicine.ManufacturingDate</p>
-                                <p><strong>Expiry Date:</strong> @medicine.ExpiryDate</p>
-                                <p><strong>Price:</strong> $@medicine.Price</p>
-                                <p><strong>Stock:</strong> @medicine.Stock</p>
-                            </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             }
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.add-to-cart-btn').on('click', function () {
+                var medicineId = $(this).data('medicine-id');
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "Home")',
+                    type: 'POST',
+                    data: { medicineId: medicineId },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            alert('Failed to add product to cart.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", xhr.responseText);
+                        alert('Error adding product to cart.');
+                    }
+                });
+            });
+
+            // Close modal when clicking the close button
+            $(document).on('click', '#closeModal', function () {
+                $('#detailsModal').fadeOut();
+            });
+
+            // Close modal when clicking outside the content
+            $(document).on('click', '.modal-overlay', function (e) {
+                if ($(e.target).closest('.modal-content').length === 0) {
+                    $(this).fadeOut();
+                }
+            });
+        });
+    </script>
+}
 
 <style>
     /* Modal Styling */
@@ -61,13 +103,13 @@
     }
 
     .modal-content {
-        background: #fff;
+        background: #f5f5f5;
         padding: 30px;
         border-radius: 10px;
         width: 70%;
         max-width: 900px;
-        max-height: 80vh; /* Limits height to 80% of screen */
-        overflow-y: auto; /* Enables scrolling */
+        max-height: 80vh;
+        overflow-y: auto;
         position: relative;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
@@ -90,27 +132,35 @@
 
     /* Scrollable Modal Body */
     .modal-body {
-        max-height: 60vh; /* Limits the content height */
-        overflow-y: auto; /* Enables vertical scrolling */
+        max-height: 60vh;
+        overflow-y: auto;
     }
 
-    /* Two-Column Layout for Medicines */
+    /* Centered Cards */
+    .cards-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
     .cards-container {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
+        justify-content: center;
         padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
     }
 
     .medicine-card {
-        background-color: #fff;
+        background-color: #e0e0e0;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 15px;
+        padding: 20px;
         text-align: center;
     }
 
@@ -122,18 +172,33 @@
     }
 
     .medicine-details {
-        margin-top: 10px;
+        margin-top: 15px;
     }
 
     .medicine-details h3 {
         color: #333;
         font-size: 18px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .medicine-details p {
         font-size: 14px;
         color: #666;
         margin: 5px 0;
+    }
+
+    .add-to-cart-btn {
+        background-color: #414464;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 15px;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #5f6492;
     }
 </style>

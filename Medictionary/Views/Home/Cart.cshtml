@@ -1,0 +1,223 @@
+@model IEnumerable<Medictionary.Models.Medicine>
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>Your Cart (@Model.Count() items)</h2>
+
+@if (!Model.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var medicine in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="cart-item">
+                            <div class="cart-item-image">
+                                @if (medicine.MedicineImage != null)
+                                {
+                                    var imagePath = Url.Content($"~/{medicine.MedicineImage.FilePath}");
+                                    <img src="@imagePath" alt="@medicine.Name">
+                                }
+                                else
+                                {
+                                    <span>No Image</span>
+                                }
+                            </div>
+                            <div class="cart-item-details">
+                                <h3>@medicine.Name</h3>
+                                <p><strong>Composition:</strong> @medicine.Composition</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>Rs. @medicine.Price</td>
+                    <td>
+                        <input type="number" value="1" min="1" class="quantity-input">
+                    </td>
+                    <td class="total-price">Rs. @medicine.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    <div class="cart-summary">
+        <p><strong>Subtotal:</strong> Rs. <span id="subtotal">0</span></p>
+        <p><strong>Sales Tax:</strong> Rs. <span id="tax">0</span></p>
+        <p><strong>Grand Total:</strong> Rs. <span id="grand-total">0</span></p>
+        <button class="checkout-btn" onclick="showPaymentMethods()">Check out</button>
+    </div>
+    
+    <div id="payment-methods" style="display:none; margin-top: 20px;">
+        <h3>Select Payment Method</h3>
+        <form id="esewaForm" method="post" asp-controller="Payment" asp-action="PayWitheSewa">
+            <input type="hidden" id="cartSubtotal" name="cartSubtotal" value="0">
+            <input type="hidden" id="cartTax" name="cartTax" value="0">
+            <input type="hidden" id="cartTotal" name="cartTotal" value="0">
+            <input type="hidden" id="productDetails" name="productDetails" value="">
+            <button type="submit" class="btn btn-success">Pay with eSewa</button>
+        </form>
+    </div>
+}
+
+<style>
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .cart-table th, .cart-table td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .cart-item-image img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 15px;
+    }
+
+    .quantity-input {
+        width: 50px;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .cart-summary {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .checkout-btn {
+        background-color: #ff6600;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .esewa-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function updateCartTotals() 
+    {
+        let subtotal = 0;
+
+        // Loop through each row in the cart table
+        document.querySelectorAll(".cart-table tbody tr").forEach(row => {
+            const price = parseFloat(row.children[1].textContent.replace("Rs. ", "")); // Get the price as a decimal
+            const quantity = parseInt(row.querySelector(".quantity-input").value); // Get the quantity as an integer
+            const total = price * quantity; // Calculate the total for the row
+
+            // Update the total price for the row
+            row.querySelector(".total-price").textContent = "Rs. " + Math.round(total); // Round to integer for display
+
+            // Add to the subtotal
+            subtotal += total;
+        });
+
+        // Update the subtotal
+        document.getElementById("subtotal").textContent = Math.round(subtotal); // Round to integer for display
+
+        // Calculate and update the tax (10% of subtotal)
+        const tax = Math.round(subtotal * 0.1); // Round to integer
+        document.getElementById("tax").textContent = tax;
+
+        // Calculate and update the grand total
+        const grandTotal = Math.round(subtotal + tax); // Round to integer
+        document.getElementById("grand-total").textContent = grandTotal;
+    }
+
+    function payWithEsewa() {
+        // Retrieve the dynamically calculated values
+        const subtotal = parseInt(document.getElementById("subtotal").textContent); // Parse as integer
+        const tax = parseInt(document.getElementById("tax").textContent); // Parse as integer
+        const grandTotal = parseInt(document.getElementById("grand-total").textContent); // Parse as integer
+
+        // Collect product details
+        const products = [];
+        document.querySelectorAll(".cart-table tbody tr").forEach(row => {
+            const name = row.querySelector(".cart-item-details h3").textContent.trim();
+            const price = parseFloat(row.children[1].textContent.replace("Rs. ", ""));
+            const quantity = parseInt(row.querySelector(".quantity-input").value);
+            products.push({ name, price, quantity });
+        });
+
+        // Serialize product details as JSON
+        const productDetails = JSON.stringify(products);
+
+        // Redirect to the backend with the required parameters
+        const url = `/Payment/PayWitheSewa?cartSubtotal=${subtotal}&cartTax=${tax}&cartTotal=${grandTotal}&productDetails=${encodeURIComponent(productDetails)}`;
+        window.location.href = url;
+    }
+
+    // Add event listeners to all quantity inputs
+    document.querySelectorAll(".quantity-input").forEach(input => {
+        input.addEventListener("input", updateCartTotals);
+    });
+
+    // Initial calculation
+    updateCartTotals();
+
+    function showPaymentMethods() {
+        document.getElementById("payment-methods").style.display = "block";
+    }
+
+    @* function payWithEsewa() {
+        const grandTotal = document.getElementById("grand-total").textContent;
+        const amount = parseFloat(grandTotal.replace("Rs. ", "")).toFixed(2); // Total amount (grand total)
+        const taxAmount = parseFloat(document.getElementById("tax").textContent.replace("Rs. ", "")).toFixed(2); // Tax amount
+        const serviceCharge = 0; // Product service charge (set to 0 if not applicable)
+        const deliveryCharge = 0; // Delivery charge (set to 0 if not applicable)
+        const totalAmount = (parseFloat(amount) + parseFloat(taxAmount) + serviceCharge + deliveryCharge).toFixed(2); // Total amount (tAmt)
+
+        const serviceCode = "EPAYTEST"; // Replace with your actual service code
+        const successUrl = encodeURIComponent("http://yourwebsite.com/success"); // Replace with your actual success URL
+        const failureUrl = encodeURIComponent("http://yourwebsite.com/failure"); // Replace with your actual failure URL
+
+        // Collect product details
+        const products = [];
+        document.querySelectorAll(".cart-table tbody tr").forEach(row => {
+            const name = row.querySelector(".cart-item-details h3").textContent.trim();
+            const price = parseFloat(row.children[1].textContent.replace("Rs. ", ""));
+            const quantity = parseInt(row.querySelector(".quantity-input").value);
+            products.push({ name, price, quantity });
+        });
+
+        // Serialize product details as JSON
+        const productDetails = encodeURIComponent(JSON.stringify(products));
+        const transactionId = `TXN${Date.now()}`; // Generate a unique transaction ID
+
+        // Redirect to eSewa payment gateway with the required parameters
+        window.location.href = `https://esewa.com.np/epay/main?amt=${amount}&txAmt=${taxAmount}&psc=${serviceCharge}&pdc=${deliveryCharge}&tAmt=${totalAmount}&pid=${transactionId}&scd=${serviceCode}&su=${successUrl}&fu=${failureUrl}&productDetails=${productDetails}`;
+    } *@
+</script>

@@ -25,32 +25,43 @@ namespace Medictionary.Controllers
                 : config["PaymentSettings:eSewa_ProductionKey"] ?? string.Empty;
         }
 
-        public async Task<IActionResult> PayWitheSewa()
+        public async Task<IActionResult> PayWitheSewa(int cartSubtotal, int cartTax, int cartTotal, string productDetails)
         {
-            PaymentManager paymentManager = new PaymentManager(
-                PaymentMethod.eSewa,
-                PaymentVersion.v2,
-                _sandBoxMode ? PaymentMode.Sandbox : PaymentMode.Production,
-                _eSewaKey
-            );
-            string currentUrl = new Uri($"{Request.Scheme}://{Request.Host}").AbsoluteUri;
-            
-            dynamic request = new
+            try
             {
-                Amount = 100,
-                TaxAmount = 10,
-                TotalAmount = 110,
-                TransactionUuid = $"tx-{Guid.NewGuid().ToString("N").Substring(0, 8)}",
-                ProductCode = _sandBoxMode ? "EPAYTEST" : "YOUR_PRODUCT_CODE",
-                ProductServiceCharge = 0,
-                ProductDeliveryCharge = 0,
-                SuccessUrl = $"{currentUrl}Payment/Success",
-                FailureUrl = $"{currentUrl}Payment/Failure",
-                SignedFieldNames = "total_amount,transaction_uuid,product_code"
-            };
-            
-            var response = await paymentManager.InitiatePaymentAsync<ApiResponse>(request);
-            return Redirect(response.data);
+                PaymentManager paymentManager = new PaymentManager(
+                    PaymentMethod.eSewa,
+                    PaymentVersion.v2,
+                    _sandBoxMode ? PaymentMode.Sandbox : PaymentMode.Production,
+                    _eSewaKey
+                );
+                string currentUrl = new Uri($"{Request.Scheme}://{Request.Host}").AbsoluteUri;
+
+                dynamic request = new
+                {
+                    Amount = 10,
+                    TaxAmount = 10,
+                    TotalAmount = 20,
+                    TransactionUuid = $"tx-{Guid.NewGuid().ToString("N").Substring(0, 8)}",
+                    ProductCode = _sandBoxMode ? "EPAYTEST" : "YOUR_PRODUCT_CODE",
+                    ProductServiceCharge = 0,
+                    ProductDeliveryCharge = 0,
+                    SuccessUrl = $"{currentUrl}Payment/Success",
+                    FailureUrl = $"{currentUrl}Payment/Failure",
+                    // ProductDetails = productDetails,
+                    SignedFieldNames = "total_amount,transaction_uuid,product_code,product_details"
+                };
+
+                Debug.WriteLine($"eSewa Request: {System.Text.Json.JsonSerializer.Serialize(request)}");
+                var response = await paymentManager.InitiatePaymentAsync<ApiResponse>(request);
+                return Redirect(response.data);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error initiating eSewa payment: {ex.Message}");
+                Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                return BadRequest("Failed to initiate payment. Please try again.");
+            }
         }
 
         [HttpGet]

@@ -1,15 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Medictionary.Models;
-using Medictionary.DTOS;
-using Microsoft.AspNetCore.Authorization;
 using Medictionary.Services.Interfaces;
 using Medictionary.Store.Interface;
-using Medictionary.Utility;
-using Medictionary.Controllers.AdminController;
 using Medictionary.Data;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Medictionary.Helpers;
 
 namespace Medictionary.Controllers
 {
@@ -90,14 +86,56 @@ namespace Medictionary.Controllers
         [HttpGet]
         public IActionResult GetMedicines(string industryId)
         {
+            var industry = _applicationDbContext.Industries.Find(industryId);
+
+            if (industry == null)
+            {
+                return BadRequest("Invalid industry ID.");
+            }
+
             var medicines = _applicationDbContext.Medicines
                 .Where(m => m.IndustryID == industryId)
                 .Include(m => m.MedicineImage)
                 .ToList();
 
+            ViewBag.IndustryName = industry.Name;
+
             return PartialView("_MedicineDetails", medicines);
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> Stockiest()
+        {
+            var stockiests = await _userManager.GetUsersInRoleAsync("Stockiest");
+            return View(stockiests);
+        }
+        
+        [HttpPost]
+        public IActionResult AddToCart(string medicineId)
+        {
+            if (string.IsNullOrEmpty(medicineId))
+            {
+                return BadRequest("Invalid medicine ID.");
+            }
 
+            var cart = HttpContext.Session.GetObjectFromJson<List<string>>("Cart") ?? new List<string>();
+            cart.Add(medicineId);
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            return Ok(new { success = true, message = "Product added to cart." });
+        }
+
+        [HttpGet]
+        public IActionResult Cart()
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<List<string>>("Cart") ?? new List<string>();
+            var medicines = _applicationDbContext.Medicines
+                .Where(m => cart.Contains(m.MedicineID))
+                .Include(m => m.MedicineImage)
+                .ToList();
+
+            return View(medicines);
+        }
         // [HttpGet]
         // public async Task<IActionResult> GetStockiests(string medicineId)
         // {
@@ -118,10 +156,19 @@ namespace Medictionary.Controllers
         [HttpGet]
         public async Task<IActionResult> GetStockiests(string industryId)
         {
+            var industry = _applicationDbContext.Industries.Find(industryId);
+
+            if (industry == null)
+            {
+                return BadRequest("Invalid industry ID.");
+            }
+
             var approvedStockiests = await _applicationDbContext.StockiestRequests
                 .Where(sr => sr.IndustryID == industryId && sr.Status == "Approved")
                 .Include(sr => sr.Stockiest)
                 .ToListAsync();
+
+            ViewBag.IndustryName = industry.Name;
 
             return PartialView("_StockiestDetails", approvedStockiests);
         }
