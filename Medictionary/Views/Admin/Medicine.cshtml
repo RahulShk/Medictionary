@@ -8,7 +8,7 @@
     <h2 class="text-center mb-5">Medicine Items</h2>
     <div class="row mb-5">
         <div class="col">
-            <a class="btn btn-primary custom-btn" asp-controller="Admin" asp-action="AddMedicine">Add Medicine</a>
+            <a class="btn btn-primary custom-btn" asp-controller="Admin" asp-action="AddMedicine" asp-route-industryId="@Model.FirstOrDefault()?.IndustryID">Add Medicine</a>
             <a class="btn btn-primary custom-btn" onclick="sortTable('name')">Alphabetical Order</a>
         </div>
     </div>

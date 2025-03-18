@@ -161,9 +161,31 @@ namespace Medictionary.Controllers.AdminController
             }
         }
         
+        [HttpGet]
         public IActionResult AddMedicine(string industryId)
         {
-            var medicineDto = new MedicineDTO { IndustryID = industryId };
+            _logger.LogInformation($"AddMedicine called with IndustryID: {industryId}");
+
+            if (string.IsNullOrEmpty(industryId))
+            {
+                _logger.LogError("IndustryID is null or empty.");
+                return RedirectToAction("Index");
+            }
+
+            var industry = _industryStore.FindById(industryId);
+
+            if (industry == null)
+            {
+                _logger.LogError($"Industry not found for ID: {industryId}");
+                return RedirectToAction("Index");
+            }
+
+            var medicineDto = new MedicineDTO
+            {
+                IndustryID = industry.IndustryId,
+                Manufacturer = industry.Name
+            };
+
             return View(medicineDto);
         }
 
@@ -172,6 +194,10 @@ namespace Medictionary.Controllers.AdminController
         {
             if (!ModelState.IsValid)
             {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    _logger.LogError($"Validation Error: {error.ErrorMessage}");
+                }
                 return View(medicineDTO);
             }
 
@@ -180,6 +206,17 @@ namespace Medictionary.Controllers.AdminController
                 ModelState.AddModelError("MedicineImageFile", "The image file is required.");
                 return View(medicineDTO);
             }
+
+            var industry = _industryStore.FindById(medicineDTO.IndustryID);
+
+            if (industry == null)
+            {
+                ModelState.AddModelError("IndustryID", "Invalid Industry.");
+                return View(medicineDTO);
+            }
+
+            medicineDTO.IndustryID = industry.IndustryId;
+            medicineDTO.Manufacturer = industry.Name;
 
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(medicineDTO.MedicineImageFile.FileName)}";
             var filePath = await _fileService.SaveFileAsync("medicine", fileName, medicineDTO.MedicineImageFile);
@@ -212,6 +249,11 @@ namespace Medictionary.Controllers.AdminController
                 .Include(m => m.MedicineImage)
                 .Where(m => m.IndustryID == id)
                 .ToListAsync();
+
+            if (!medicines.Any())
+            {
+                medicines = new List<Medicine> { new Medicine { IndustryID = id } };
+            }
             return View(medicines);
         }
 

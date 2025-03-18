@@ -257,6 +257,10 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\medicine\\0e1f866d-2bd0-423f-bac1-90952adc3be6.png",
+      "PackagePath": "staticwebassets\\medicine\\0e1f866d-2bd0-423f-bac1-90952adc3be6.png"
+    },
+    {
       "Id": "c:\\Users\\Acer\\source\\repos\\Medictionary\\Medictionary\\wwwroot\\medicine\\2b44b5b9-d21c-4b78-921f-cac7a8fb6ac6.png",
       "PackagePath": "staticwebassets\\medicine\\2b44b5b9-d21c-4b78-921f-cac7a8fb6ac6.png"
     },
